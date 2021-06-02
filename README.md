@@ -1,4 +1,4 @@
-# Academic-Administration-DB
+# Academic Administration DB
 > Database for Sejong Univ. academic administration
 
 
