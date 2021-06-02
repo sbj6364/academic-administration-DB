@@ -6,7 +6,7 @@
 
 ### Tables | 테이블
 
-- **Students**: 모든 학생은 학생번호를 부여하여 식별하며 학생이름, 학생주소. 학생전화번호. 학생이메일, 전공 학과, 지도교수 정보, 등록금 납부 계좌 정보를 가진다. 학생은 부전공을 1개까지 신청할 수 있다. 학생은 한학기에 최대 10학점까지만 수강 할 수 있다.
+- **Student**: 모든 학생은 학생번호를 부여하여 식별하며 학생이름, 학생주소. 학생전화번호. 학생이메일, 전공 학과, 지도교수 정보, 등록금 납부 계좌 정보를 가진다. 학생은 부전공을 1개까지 신청할 수 있다. 학생은 한학기에 최대 10학점까지만 수강 할 수 있다.
 
   > 예상 attribute
 
@@ -15,16 +15,32 @@
   - **address** 학생 주소
   - **phone** 학생 전화번호
   - **email** 학생 이메일
-  - **department_id** 전공 학과
-  - **sub_department_id** 부전공 학과 (최대 1개)
-  - **professor_id** 지도 교수
+  - **dept_id** 전공 학과
+  - **subdept_id** 부전공 학과 (최대 1개)
+  - **prof_id** 지도 교수
   - **account** 등록금 납부 계좌
   - **grade** 학년
   - **semester** 학기
 
+  ~~~mysql
+  CREATE TABLE student (
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(45),
+    address VARCHAR(45),
+    phone VARCHAR(45),
+    email VARCHAR(45),
+    dept_id INTEGER,
+    subdept_id INTEGER,
+    prof_id INTEGER,
+    account VARCHAR(40),
+    grade INTEGER,
+    semester INTEGER
+  );
+  ~~~
+
   
 
-- **Professors**: 교수는 소속학과가 반드시 있어야 하고, 학생을 반드시 담당해야 하며, 강좌에 대한 강의를 반드시 해야 한다. 교수는 1개 이상의 복수 학과에 소속이 가능하다. 모든 교수는 교수번호를 부여하여 식별하며 교수이름, 교수주소, 교수전화번호. 교수이메일. 소속 학과번호 정보를 가진다.
+- **Professor**: 교수는 소속학과가 반드시 있어야 하고, 학생을 반드시 담당해야 하며, 강좌에 대한 강의를 반드시 해야 한다. 교수는 1개 이상의 복수 학과에 소속이 가능하다. 모든 교수는 교수번호를 부여하여 식별하며 교수이름, 교수주소, 교수전화번호. 교수이메일. 소속 학과번호 정보를 가진다.
 
   > 예상 attribute
 
@@ -33,10 +49,25 @@
   - **address** 교수 주소
   - **phone** 교수 전화번호
   - **email** 교수 이메일
-  - **department_id** 소속 학과
-  - **sub_department_id** 복수 학과 (1개 이상 가능)
+  - **dept_id** 소속 학과
+  - **subdept_id** 복수 학과 (1개 이상 가능)
   - **student_id** 담당 학생
-  - **lecture** 담당 강좌
+  - **lecture_id** 담당 강좌
+
+  ~~~mysql
+  CREATE TABLE professor (
+    id INTEGER PRIMARY KEY,  
+    name VARCHAR(45),
+    address VARCHAR(45),
+    phone VARCHAR(45),
+    email VARCHAR(45),
+    dept_id INTEGER,
+    student_id INTEGER,
+    lecture_id INTEGER
+  );
+  ~~~
+
+  
 
   
 
@@ -44,7 +75,7 @@
 
 
 
-- **Departments**: 학과는 학과번호를 부여하여 식별하며 학과명, 학과전화번호, 학과사무실 정보를 가진다. 해당 학과에서 개설하는 강좌가 반드시 1개 이상 존재해야 하며, 동시에 학과장이 1명 있어야 한다.
+- **Department**: 학과는 학과번호를 부여하여 식별하며 학과명, 학과전화번호, 학과사무실 정보를 가진다. 해당 학과에서 개설하는 강좌가 반드시 1개 이상 존재해야 하며, 동시에 학과장이 1명 있어야 한다.
 
   > 예상 attribute
 
@@ -57,7 +88,7 @@
 
 
 
-- **Lectures**: 강좌는 강좌번호, 분반번호, 강의하는 교수, 강좌이름, 강의요일, 강의교시, 취득학점 (1~4), 강좌시간 (1~6), 개설 학과, 강의실 정보가 필요하다.
+- **Lecture**: 강좌는 강좌번호, 분반번호, 강의하는 교수, 강좌이름, 강의요일, 강의교시, 취득학점 (1~4), 강좌시간 (1~6), 개설 학과, 강의실 정보가 필요하다.
 
   > 예상 attribute
 
@@ -74,7 +105,7 @@
 
 
 
-- **Courses**: 수강내역은 학생번호, 강좌번호. 교수번호를 부여하여 식별하며 출석점수, 중간고사점수, 기말고사점수, 기타 점수, 총점 (0 ~ 100), 평점 (A ~ F) 정보를 가진다.
+- **Course**: 수강내역은 학생번호, 강좌번호. 교수번호를 부여하여 식별하며 출석점수, 중간고사점수, 기말고사점수, 기타 점수, 총점 (0 ~ 100), 평점 (A ~ F) 정보를 가진다.
 
   > 예상 attribute
 
@@ -90,7 +121,7 @@
 
 
 
-- **Clubs**: 학생은 1개 이상의 동아리에 가입이 가능하다. 동아리는 동아리 번호, 동아리 이름, 소속 학생 숫자, 회장 학생 정보, 동아리 지도 교수 정보, 동아리방 정보 등을 가져야 한다.
+- **Club**: 학생은 1개 이상의 동아리에 가입이 가능하다. 동아리는 동아리 번호, 동아리 이름, 소속 학생 숫자, 회장 학생 정보, 동아리 지도 교수 정보, 동아리방 정보 등을 가져야 한다.
 
   > 예상 attribute
 
@@ -103,7 +134,7 @@
 
 
 
-- **Tuitions**: 학생별 등록금 납부 내역을 기록해야 한다. 학생 번호, 등록금 납부 연도, 등록금 납부 학기, 등록금 총액, 납부 총액, 마지막 납부 일자가 기록되야 한다. 납부 총액이 등록금 총액 보다 작을 경우에는 수강내역 “신규 삽입”에서 “등록금 미납”오류를 표시해야 한다.
+- **Tuition**: 학생별 등록금 납부 내역을 기록해야 한다. 학생 번호, 등록금 납부 연도, 등록금 납부 학기, 등록금 총액, 납부 총액, 마지막 납부 일자가 기록되야 한다. 납부 총액이 등록금 총액 보다 작을 경우에는 수강내역 “신규 삽입”에서 “등록금 미납”오류를 표시해야 한다.
 
   > 예상 attribute
 
@@ -114,7 +145,12 @@
   - **total_paid** 납부 총액
   - **last_paid** 마지막 납부 일자
 
- 
+
+
+~~~mysql
+~~~
+
+
 
 ---
 
@@ -133,13 +169,13 @@
 2. MySQL 접속 코드는 중간고사 시에 제공된 샘플코드와 “동일”한 코드를 사용한다. (이외의 접속 코드 사용시에는 0점 처리됨)
    
    ~~~java
-   	 static Connection con;
-      Statement stmt;
-      ResultSet rs;
-      String Driver = "";
-      String url = "jdbc:mysql://localhost:3306/madang?&serverTimezone=Asia/Seoul&useSSL=false";
-      String userid = "madang";
-      String pwd = "madang";
+   static Connection con;
+   Statement stmt;
+   ResultSet rs;
+   String Driver = "";
+   String url = "jdbc:mysql://localhost:3306/madang?&serverTimezone=Asia/Seoul&useSSL=false";
+   String userid = "madang";
+   String pwd = "madang";
    ~~~
    
    
@@ -154,7 +190,7 @@
 
    - 데이터베이스 초기화 기능
 
-     > 초기화 버튼
+     > `button_reset`
 
      - `drop table if exists`
      - `create table`
@@ -162,9 +198,10 @@
 
      
 
-   - 데이터베이스에 포함된 모든 테이블에 대한 입력/삭제/변경 기능
+   - 데이터베이스에 포함된 모든 테이블에 대한 입력/삭제/변경 기능  
+     (단, 삭제/변경은 “1개”의 고정된 특정 조건이 아닌 “조건식”을 입력 받아서 삭제/변경하는 방식으로 구현해야 함)
 
-     > 단, 삭제/변경은 “1개”의 고정된 특정 조건이 아닌 “조건식”을 입력 받아서 삭제/변경하는 방식으로 구현해야 함
+     > `button_insert`, `button_del_upd`
 
      - 입력 
      - 삭제 
@@ -172,11 +209,15 @@
 
       
 
-   - 전체 테이블 보기 기능
+   - 전체 테이블 보기 기능: 모든 테이블의 내용을 보여주는 기능
 
-     > 모든 테이블의 내용을 보여주는 기능
+     > `button_viewall`
 
      
+
+   - 총 버튼 4개 (reset, insert, del_upd, viewall)
+
+   
 
 5. **Professor**: 교수 사용자에 대해서 다음의 기능을 구현한다.
 
