@@ -1,5 +1,5 @@
 # Academic Administration DB
-> Database for Sejong Univ. academic administration
+> Database for academic administration of Sejong Univ.
 
 
 
@@ -21,11 +21,13 @@
 
 - 학생별 등록금 납부 내역을 기록해야 한다. 학생 번호, 등록금 납부 연도, 등록금 납부 학기, 등록금 총액, 납부 총액, 마지막 납부 일자가 기록되야 한다. 납부 총액이 등록금 총액 보다 작을 경우에는 수강내역 “신규 삽입”에서 “등록금 미납”오류를 표시해야 한다.
 
-
-
 > 위의 기능 요구사항을 구현하기 위해서 필요한 속성이 있다면, 반영하여 스키마 디자인 시에 **추가** 가능. Project는 2인 1조로 진행되지만, 타과 수업인 관계로 본인은 1인 1팀으로 혼자 진행하게 되었다. ~~우리 과는 왜 DB 안열어줘요?????~~
 
 
+
+#### [Details | 세부 설계](./details.md)
+
+> 본 내용에 대한 세부적인 설계 사항이다.
 
 
 
@@ -46,7 +48,7 @@
 
 ### Requirements Statement & Schema Definition | 요구사항 명세서 및 스키마 정의서
 
-> [Requirements Statement](./requirements_statement.md) / [Schema Definition](./schema_definition.md)
+> [Details](./details.md)
 
 - 요구사항 명세서에는 데이터베이스 설계에 필요한 사용자 요구사항을 항목별로 정리한다. (사용자 인터페이스 및 구현될 삽입/삭제/변경/검색 기능과 관련된 요구사항도 모두 정리할 것)
 - 스키마 정의는 MySQL의 EER Diagram 도구를 활용해서 작성한다.

@@ -1,6 +1,12 @@
-# Requirements Statement
-> **요구사항 명세서** 데이터베이스 설계에 필요한 사용자 요구사항을 항목별로 정리한 내용.  
+# Requirements Statement / Schema
+> **요구사항 명세서 및 스키마 정의** 데이터베이스 설계에 필요한 사용자 요구사항을 항목별로 정리한 내용.  
 > (사용자 인터페이스 및 구현될 삽입/삭제/변경/검색 기능과 관련된 요구사항도 모두 포함)
+
+
+
+### EER Diagram | EER 다이어그램
+
+![eerd](./sejong_erd.png)
 
 
 
@@ -19,19 +25,34 @@
   - **account** 등록금 납부 계좌
 
   ~~~mysql
-  CREATE TABLE student (
-    id INTEGER PRIMARY KEY,
-    name VARCHAR(45),
-    address VARCHAR(45),
-    phone VARCHAR(45),
-    email VARCHAR(45),
-    dept_id INTEGER,
-    subdept_id INTEGER,
-    prof_id INTEGER,
-    account VARCHAR(40),
-    grade INTEGER,
-    semester INTEGER
-  );
+  CREATE TABLE IF NOT EXISTS `sejong`.`student` (
+    `id` INT NOT NULL,
+    `name` VARCHAR(45) NOT NULL,
+    `address` VARCHAR(45) NULL,
+    `phone` VARCHAR(45) NULL,
+    `email` VARCHAR(45) NULL,
+    `dept_id` INT NOT NULL,
+    `subdept_id` INT NULL,
+    `prof_id` INT NOT NULL,
+    `account` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `idx_deptid` (`dept_id`),
+    CONSTRAINT `fk_student_course1`
+      FOREIGN KEY (`id`)
+      REFERENCES `sejong`.`course` (`student_id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+    CONSTRAINT `fk_student_club_member1`
+      FOREIGN KEY (`id`)
+      REFERENCES `sejong`.`club_member` (`student_id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+    CONSTRAINT `fk_student_tuition1`
+      FOREIGN KEY (`id`)
+      REFERENCES `sejong`.`tuition` (`student_id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION)
+  ENGINE = InnoDB;
   ~~~
 
   
@@ -45,20 +66,23 @@
   - **email** 교수 이메일
   - **dept_id** 소속 학과
   - **subdept_id** 복수 학과 (1개 이상 가능)
-  - **student_id** 담당 학생
-  - **lecture_id** 담당 강좌
 
   ~~~mysql
-  CREATE TABLE professor (
-    id INTEGER PRIMARY KEY,  
-    name VARCHAR(45),
-    address VARCHAR(45),
-    phone VARCHAR(45),
-    email VARCHAR(45),
-    dept_id INTEGER,
-    student_id INTEGER,
-    lecture_id INTEGER
-  );
+  CREATE TABLE IF NOT EXISTS `sejong`.`professor` (
+    `id` INT NOT NULL,
+    `name` VARCHAR(45) NOT NULL,
+    `address` VARCHAR(45) NULL,
+    `phone` VARCHAR(45) NULL,
+    `email` VARCHAR(45) NULL,
+    `dept_id` INT NOT NULL,
+    `subdept_id` INT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_professor_course`
+      FOREIGN KEY (`id`)
+      REFERENCES `sejong`.`course` (`prof_id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION)
+  ENGINE = InnoDB;
   ~~~
 
   > 교수와 학생은 학생번호와 교수번호를 이용한 지도 관계를 가지며, 해당 관계에는 현재 학년/학기 정보를 포함한다.
@@ -66,6 +90,7 @@
 
 
 - **Department**: 학과는 학과번호를 부여하여 식별하며 학과명, 학과전화번호, 학과사무실 정보를 가진다. 해당 학과에서 개설하는 강좌가 반드시 1개 이상 존재해야 하며, 동시에 학과장이 1명 있어야 한다.
+
   - **id** 학과 번호
   - **name** 학과 이름
   - **phone** 학과 전화번호
@@ -73,9 +98,32 @@
   - **lecture** 개설 강좌
   - **head_professor** 학과장 (1명)
 
+  ~~~mysql
+  CREATE TABLE IF NOT EXISTS `sejong`.`department` (
+    `id` INT NOT NULL,
+    `name` VARCHAR(20) NOT NULL,
+    `office` VARCHAR(15) NULL DEFAULT NULL,
+    `headprof_id` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_department_student1`
+      FOREIGN KEY (`id`)
+      REFERENCES `sejong`.`student` (`dept_id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+    CONSTRAINT `fk_department_lecture1`
+      FOREIGN KEY (`id`)
+      REFERENCES `sejong`.`lecture` (`dept_id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+  ~~~
 
+  
 
 - **Lecture**: 강좌는 강좌번호, 분반번호, 강의하는 교수, 강좌이름, 강의요일, 강의교시, 취득학점 (1~4), 강좌시간 (1~6), 개설 학과, 강의실 정보가 필요하다.
+
   - **id** 강좌 번호
   - **class_id** 분반 번호
   - **professor** 강의 교수
@@ -87,9 +135,34 @@
   - **dept_id** 개설 학과
   - **room** 강의실
 
+  ~~~mysql
+  CREATE TABLE IF NOT EXISTS `sejong`.`lecture` (
+    `id` INT NOT NULL,
+    `class_id` INT NOT NULL,
+    `prof_id` INT NOT NULL,
+    `name` VARCHAR(45) NOT NULL,
+    `day` VARCHAR(45) NULL,
+    `period` INT NULL,
+    `credit` INT NULL,
+    `time` INT NULL,
+    `dept_id` INT NULL,
+    `room` INT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `idx_deptid` (`dept_id`),
+    CONSTRAINT `fk_lecture_course1`
+      FOREIGN KEY (`id`)
+      REFERENCES `sejong`.`course` (`lecture_id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+  ~~~
+
 
 
 - **Course**: 수강내역은 학생번호, 강좌번호. 교수번호를 부여하여 식별하며 출석점수, 중간고사점수, 기말고사점수, 기타 점수, 총점 (0 ~ 100), 평점 (A ~ F) 정보를 가진다.
+
   - **student_id** 학생 번호
   - **lecture_id** 강좌 번호
   - **prof_id** 교수 번호
@@ -100,9 +173,30 @@
   - **total** 총점
   - **gpa** 평점
 
+  ~~~mysql
+  CREATE TABLE IF NOT EXISTS `sejong`.`course` (
+    `student_id` INT NOT NULL,
+    `lecture_id` INT NOT NULL,
+    `prof_id` INT NOT NULL,
+    `attendance` INT NOT NULL,
+    `midterm` INT NULL,
+    `final` INT NULL,
+    `etc` INT NULL,
+    `total` INT NULL,
+    `gpa` VARCHAR(10) NULL,
+    PRIMARY KEY (`student_id`, `lecture_id`, `prof_id`),
+    INDEX `idx_lectureid` (`lecture_id`),
+    INDEX `idx_studentid` (`student_id`),
+    INDEX `idx_prof_id` (`prof_id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+  ~~~
+
 
 
 - **Club**: 학생은 1개 이상의 동아리에 가입이 가능하다. 동아리는 동아리 번호, 동아리 이름, 소속 학생 숫자, 회장 학생 정보, 동아리 지도 교수 정보, 동아리방 정보 등을 가져야 한다.
+
   - **id** 동아리 번호
   - **name** 동아리 이름
   - **student_num** 동아리 학생 수
@@ -110,20 +204,61 @@
   - **prof_id** 동아리 지도 교수
   - **room** 동아리방
 
+  ~~~mysql
+  CREATE TABLE IF NOT EXISTS `sejong`.`club` (
+    `id` INT NOT NULL,
+    `name` VARCHAR(45) NOT NULL,
+    `student_num` INT NULL,
+    `president_id` INT NULL,
+    `room` INT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_club_club_member1`
+      FOREIGN KEY (`id`)
+      REFERENCES `sejong`.`club_member` (`club_id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION)
+  ENGINE = InnoDB;
+  ~~~
 
+  - mapping table
+
+  ~~~mysql
+  CREATE TABLE IF NOT EXISTS `sejong`.`club_member` (
+    `club_id` INT NOT NULL,
+    `student_id` INT NOT NULL,
+    PRIMARY KEY (`club_id`, `student_id`),
+    INDEX `idx_clubid` (`club_id`),
+    INDEX `idx_studentid` (`student_id`)
+  )
+  ENGINE = InnoDB;
+  ~~~
+
+  
 
 - **Tuition**: 학생별 등록금 납부 내역을 기록해야 한다. 학생 번호, 등록금 납부 연도, 등록금 납부 학기, 등록금 총액, 납부 총액, 마지막 납부 일자가 기록되야 한다. 납부 총액이 등록금 총액 보다 작을 경우에는 수강내역 “신규 삽입”에서 “등록금 미납”오류를 표시해야 한다.
+
   - **student_id** 학생 번호
   - **year** 등록금 납부 연도
   - **semester** 등록금 납부 학기
   - **total_tuition** 등록금 총액
   - **total_paid** 납부 총액
   - **last_paid** 마지막 납부 일자
-
-
-
-~~~mysql
-~~~
+  
+  ~~~mysql
+  CREATE TABLE IF NOT EXISTS `sejong`.`tuition` (
+    `id` INT NOT NULL,
+    `student_id` INT NOT NULL,
+    `year` INT NOT NULL,
+    `semester` INT NULL,
+    `total_tuition` INT NULL,
+    `total_paid` INT NULL,
+    `last_paid` DATETIME NULL,
+    PRIMARY KEY (`id`),
+    INDEX `idx_studentid` (`student_id`))
+  ENGINE = InnoDB;
+  ~~~
+  
+  
 
 
 
