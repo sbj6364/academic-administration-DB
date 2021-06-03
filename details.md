@@ -347,3 +347,14 @@
 
 ### Sample Data | 샘플 데이터
 
+> 프로그램의 테스트를 위해 모든 데이터는 임의로 작성했다.
+
+- student: 25명
+- professor: 11명
+- department: 10개
+- lecture: 15개
+- course: 28개
+- club: 5개
+- club_member: 29명
+- tuition: 25개
+
