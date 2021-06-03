@@ -320,7 +320,6 @@
      # 입력 연도/학기에 따른 강의 과목 보기
      select * from lecture
      where prof_id = (교수 ID) and year = (연도) and semester = (학기);
-     
 
    - `show students`: 현재 본인이 “지도”하는 학생에 대한 정보를 보여주는 기능
 
@@ -364,13 +363,13 @@
      ~~~mysql
      # 입력 연도/학기에 따른 수강 과목 보기
      select l.*, c.gpa from lecture l, course c
-     where l.year=2021 and l.semester=1
-     	and c.student_id = 17011806
-     	and l.id=c.lecture_id
+     where l.year = (연도) and l.semester = (학기)
+     	and c.student_id = (학생 ID)
+     	and l.id = c.lecture_id
      	and l.class_id = c.class_id;
      	
-     	# 복잡한데.. 더 줄일 수 있을 것인가?
-     	#사실 이번 프로젝트에서는 크게 상관은 없다.
+     # 복잡한데.. 더 줄일 수 있을 것인가?
+     # 사실 이번 프로젝트에서는 크게 상관은 없다.
      ~~~
 
      
