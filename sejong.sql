@@ -23,16 +23,17 @@ CREATE TABLE IF NOT EXISTS `sejong`.`course` (
   `student_id` INT NOT NULL,
   `lecture_id` INT NOT NULL,
   `prof_id` INT NOT NULL,
-  `attendance` INT NOT NULL,
-  `midterm` INT NULL,
-  `final` INT NULL,
-  `etc` INT NULL,
-  `total` INT NULL,
-  `gpa` VARCHAR(10) NULL,
-  PRIMARY KEY (`student_id`, `lecture_id`, `prof_id`),
-  INDEX `idx_lectureid` (`lecture_id`),
-  INDEX `idx_studentid` (`student_id`),
-  INDEX `idx_prof_id` (`prof_id`))
+  `class_id` INT NOT NULL,
+  `attendance` INT NOT NULL DEFAULT 0,
+  `midterm` INT NULL DEFAULT 0,
+  `final` INT NULL DEFAULT 0,
+  `etc` INT NULL DEFAULT 0,
+  `total` INT NOT NULL DEFAULT 0,
+  `gpa` VARCHAR(10) NULL DEFAULT NULL,
+  PRIMARY KEY (`student_id`, `lecture_id`, `prof_id`, `class_id`),
+  INDEX `idx_lectureid` (`lecture_id` ASC) VISIBLE,
+  INDEX `idx_studentid` (`student_id` ASC) VISIBLE,
+  INDEX `idx_prof_id` (`prof_id` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -151,6 +152,8 @@ CREATE TABLE IF NOT EXISTS `sejong`.`lecture` (
   `time` INT NULL DEFAULT NULL,
   `dept_id` INT NULL DEFAULT NULL,
   `room` VARCHAR(45) NULL DEFAULT NULL,
+  `year` INT NULL,
+  `semester` INT NULL,
   PRIMARY KEY (`id`, `class_id`),
   INDEX `idx_deptid` (`dept_id` ASC) VISIBLE,
   CONSTRAINT `fk_lecture_course1`
@@ -226,11 +229,11 @@ INSERT INTO `student` VALUES(17011818, '김지오', '경기도 분당시', '010-
 INSERT INTO `student` VALUES(17011819, '김연우', '경기도 분당시', '010-3426-2351', 'kyw@sejong.ac.kr', 3232, NULL, 130010, '우리은행 34253-545656-745');
 INSERT INTO `student` VALUES(17011820, '문승재', '제주특별자치도 서귀포시', '010-3472-4367', 'msj@sejong.ac.kr', 3225, NULL, 130008, '기업은행 453-534657-54534');
 # 20
-INSERT INTO `student` VALUES(17011821, '박준희', '경기도 분당시', '010-8765-2371', 'kmj@sejong.ac.kr', 3232, NULL, 130010, '국민은행 536-564574-12413');
-INSERT INTO `student` VALUES(17011822, '안정연', '서울특별시 광진구', '010-5423-5673', 'psh@sejong.ac.kr', 3210, NULL, 130001, '국민은행 786-234252-652788');
-INSERT INTO `student` VALUES(17011823, '원종서', '서울특별시 광진구', '010-4532-5632', 'jjh@sejong.ac.kr', 3210, NULL, 130001, '하나은행 560-875408-02345');
-INSERT INTO `student` VALUES(17011824, '윤상혁', '서울특별시 광진구', '010-3646-1634', 'bsh@sejong.ac.kr', 3210, NULL, 130001, '신한은행 245-657489-45347');
-INSERT INTO `student` VALUES(17011825, '이다은', '경기도 포천시', '010-4674-6453', 'kms@sejong.ac.kr', 3232, NULL, 130010, '국민은행 236-564322-76483');
+INSERT INTO `student` VALUES(17011821, '박준희', '경기도 분당시', '010-8765-2371', 'pjh@sejong.ac.kr', 3232, NULL, 130010, '국민은행 536-564574-12413');
+INSERT INTO `student` VALUES(17011822, '안정연', '서울특별시 광진구', '010-5423-5673', 'ajy@sejong.ac.kr', 3210, NULL, 130001, '국민은행 786-234252-652788');
+INSERT INTO `student` VALUES(17011823, '원종서', '서울특별시 광진구', '010-4532-5632', 'wjs@sejong.ac.kr', 3210, NULL, 130001, '하나은행 560-875408-02345');
+INSERT INTO `student` VALUES(17011824, '윤상혁', '서울특별시 광진구', '010-3646-1634', 'ysh@sejong.ac.kr', 3210, NULL, 130001, '신한은행 245-657489-45347');
+INSERT INTO `student` VALUES(17011825, '이다은', '경기도 포천시', '010-4674-6453', 'lde@sejong.ac.kr', 3232, NULL, 130010, '국민은행 236-564322-76483');
 
 
 -- ------------------------------
@@ -275,7 +278,7 @@ INSERT INTO `department` VALUES (3215, '정보보호학과', '센404', 130006);
 INSERT INTO `department` VALUES (3220, '소프트웨어학과', '센402', 130007); 
 INSERT INTO `department` VALUES (3225, '데이터사이언스학과', '센403', 130008); 
 INSERT INTO `department` VALUES (3231, '무인이동체공학과', '센405', 130009); 
-INSERT INTO `department` VALUES (3232, '스마트기기공학전공', '센405', 1300010); 
+INSERT INTO `department` VALUES (3232, '스마트기기공학전공', '센405', 130010); 
 
 
 
@@ -295,57 +298,57 @@ INSERT INTO `department` VALUES (3232, '스마트기기공학전공', '센405', 
 # 화학과 2433 무기화학
 # 전자정보통신공학과 2930 디지털신호처리
 -- ------------------------------
-INSERT INTO `lecture` VALUES (301, 01, 130001, '데이터베이스', 'TUE', 1, 3, 90, 3210, '센B103');
-INSERT INTO `lecture` VALUES (301, 02, 130001, '데이터베이스', 'TUE', 2, 3, 90, 3210, '센B103');
-INSERT INTO `lecture` VALUES (302, 01, 130002, '디지털신호처리', 'WED', 1, 3, 90, 2930, '충410');
-INSERT INTO `lecture` VALUES (303, 01, 130003, '건축개론', 'MON', 1, 3, 180, 2769, '이103');
-INSERT INTO `lecture` VALUES (304, 01, 130004, '조직커뮤니케이션', 'MON', 4, 3, 90, 2233, '집403');
-INSERT INTO `lecture` VALUES (305, 01, 130005, '무기화학', 'TUE', 1, 3, 90, 2433, '영302');
-INSERT INTO `lecture` VALUES (305, 02, 130005, '무기화학', 'TUE', 2, 3, 90, 2433, '영302');
-INSERT INTO `lecture` VALUES (306, 01, 130006, '대칭키암호론', 'THU', 2, 3, 90, 3215, '센B210');
-INSERT INTO `lecture` VALUES (307, 01, 130007, 'JAVA프로그래밍', 'FRI', 5, 3, 90, 3220, '센B209');
-INSERT INTO `lecture` VALUES (308, 01, 130008, '데이터시각화', 'THU', 6, 3, 90, 3225, '센B101');
+INSERT INTO `lecture` VALUES (301, 01, 130001, '데이터베이스', 'TUE', 1, 3, 90, 3210, '센B103', 2021, 1);
+INSERT INTO `lecture` VALUES (301, 02, 130001, '데이터베이스', 'TUE', 2, 3, 90, 3210, '센B103', 2021, 1);
+INSERT INTO `lecture` VALUES (302, 01, 130002, '디지털신호처리', 'WED', 1, 3, 90, 2930, '충410', 2021, 1);
+INSERT INTO `lecture` VALUES (303, 01, 130003, '건축개론', 'MON', 1, 3, 180, 2769, '이103', 2021, 1);
+INSERT INTO `lecture` VALUES (304, 01, 130004, '조직커뮤니케이션', 'MON', 4, 3, 90, 2233, '집403', 2021, 1);
+INSERT INTO `lecture` VALUES (305, 01, 130005, '무기화학', 'TUE', 1, 3, 90, 2433, '영302', 2021, 1);
+INSERT INTO `lecture` VALUES (305, 02, 130005, '무기화학', 'TUE', 2, 3, 90, 2433, '영302', 2021, 1);
+INSERT INTO `lecture` VALUES (306, 01, 130006, '대칭키암호론', 'THU', 2, 3, 90, 3215, '센B210', 2021, 1);
+INSERT INTO `lecture` VALUES (307, 01, 130007, 'JAVA프로그래밍', 'FRI', 5, 3, 90, 3220, '센B209', 2021, 1);
+INSERT INTO `lecture` VALUES (308, 01, 130008, '데이터시각화', 'THU', 6, 3, 90, 3225, '센B101', 2021, 1);
 # 10
-INSERT INTO `lecture` VALUES (309, 01, 130009, '동역학', 'WED', 1, 3, 180, 3231, '율201');
-INSERT INTO `lecture` VALUES (309, 02, 130009, '동역학', 'WED', 4, 3, 180, 3231, '율201');
-INSERT INTO `lecture` VALUES (310, 01, 130010, '기계학습', 'MON', 2, 3, 90, 3232, '센B102');
-INSERT INTO `lecture` VALUES (310, 02, 130010, '기계학습', 'MON', 4, 3, 90, 3232, '센B102');
-INSERT INTO `lecture` VALUES (310, 03, 130011, '기계학습', 'WED', 2, 3, 90, 3232, '센B102');
+INSERT INTO `lecture` VALUES (309, 01, 130009, '동역학', 'WED', 1, 3, 180, 3231, '율201', 2021, 1);
+INSERT INTO `lecture` VALUES (309, 02, 130009, '동역학', 'WED', 4, 3, 180, 3231, '율201', 2021, 1);
+INSERT INTO `lecture` VALUES (310, 01, 130010, '기계학습', 'MON', 2, 3, 90, 3232, '센B102', 2021, 1);
+INSERT INTO `lecture` VALUES (310, 02, 130010, '기계학습', 'MON', 4, 3, 90, 3232, '센B102', 2021, 1);
+INSERT INTO `lecture` VALUES (310, 03, 130011, '기계학습', 'WED', 2, 3, 90, 3232, '센B102', 2021, 1);
 
 
 -- ------------------------------
 -- Course
 -- ------------------------------
-INSERT INTO `course` VALUES (17011801, 310, 130010, 20, 30, 20, 20, 90, 'A0');
-INSERT INTO `course` VALUES (17011802, 309, 130009, 20, 20, 30, 20, 90, 'A0');
-INSERT INTO `course` VALUES (17011803, 307, 130007, 20, 10, 30, 15, 75, 'B+');
-INSERT INTO `course` VALUES (17011804, 309, 130009, 20, 30, 20, 0, 70, 'B+');
-INSERT INTO `course` VALUES (17011805, 309, 130009, 20, 20, 20, 20, 80, 'A0');
-INSERT INTO `course` VALUES (17011806, 301, 130001, 20, 30, 30, 20, 100, 'A+');
-INSERT INTO `course` VALUES (17011806, 308, 130008, 20, 30, 30, 20, 100, 'A+');
-INSERT INTO `course` VALUES (17011806, 310, 130010, 20, 30, 30, 20, 100, 'A+');
-INSERT INTO `course` VALUES (17011807, 308, 130008, 17, 30, 30, 20, 97, 'A+');
-INSERT INTO `course` VALUES (17011808, 304, 130004, 15, 30, 30, 10, 85, 'A0');
+INSERT INTO `course` VALUES (17011801, 310, 130010, 1, 20, 30, 20, 20, 90, 'A0');
+INSERT INTO `course` VALUES (17011802, 309, 130009, 1, 20, 20, 30, 20, 90, 'A0');
+INSERT INTO `course` VALUES (17011803, 307, 130007, 1, 20, 10, 30, 15, 75, 'B+');
+INSERT INTO `course` VALUES (17011804, 309, 130009, 1, 20, 30, 20, 0, 70, 'B+');
+INSERT INTO `course` VALUES (17011805, 309, 130009, 2, 20, 20, 20, 20, 80, 'A0');
+INSERT INTO `course` VALUES (17011806, 301, 130001, 2, 20, 30, 30, 20, 100, 'A+');
+INSERT INTO `course` VALUES (17011806, 308, 130008, 1, 20, 30, 30, 20, 100, 'A+');
+INSERT INTO `course` VALUES (17011806, 310, 130010, 1, 20, 30, 30, 20, 100, 'A+');
+INSERT INTO `course` VALUES (17011807, 308, 130008, 1, 17, 30, 30, 20, 97, 'A+');
+INSERT INTO `course` VALUES (17011808, 304, 130004, 1, 15, 30, 30, 10, 85, 'A0');
 # 10
-INSERT INTO `course` VALUES (17011809, 310, 130010, 20, 30, 30, 10, 90, 'A0');
-INSERT INTO `course` VALUES (17011810, 307, 130007, 20, 30, 10, 20, 80, 'A0');
-INSERT INTO `course` VALUES (17011811, 303, 130003, 0, 10, 30, 10, 50, 'C0');
-INSERT INTO `course` VALUES (17011812, 305, 130005, 20, 10, 10, 20, 60, 'C+');
-INSERT INTO `course` VALUES (17011813, 302, 130002, 20, 25, 30, 20, 95, 'A+');
-INSERT INTO `course` VALUES (17011814, 302, 130002, 20, 30, 0, 20, 70, 'B+');
-INSERT INTO `course` VALUES (17011815, 306, 130006, 20, 30, 30, 20, 100, 'A+');
-INSERT INTO `course` VALUES (17011816, 301, 130001, 20, 0, 0, 10, 30, 'F');
-INSERT INTO `course` VALUES (17011817, 304, 130004, 20, 0, 10, 20, 50, 'C0');
-INSERT INTO `course` VALUES (17011818, 301, 130001, 20, 20, 10, 30, 80, 'A0');
+INSERT INTO `course` VALUES (17011809, 310, 130010, 2, 20, 30, 30, 10, 90, 'A0');
+INSERT INTO `course` VALUES (17011810, 307, 130007, 1, 20, 30, 10, 20, 80, 'A0');
+INSERT INTO `course` VALUES (17011811, 303, 130003, 1, 0, 10, 30, 10, 50, 'C0');
+INSERT INTO `course` VALUES (17011812, 305, 130005, 1, 20, 10, 10, 20, 60, 'C+');
+INSERT INTO `course` VALUES (17011813, 302, 130002, 1, 20, 25, 30, 20, 95, 'A+');
+INSERT INTO `course` VALUES (17011814, 302, 130002, 1, 20, 30, 0, 20, 70, 'B+');
+INSERT INTO `course` VALUES (17011815, 306, 130006, 1, 20, 30, 30, 20, 100, 'A+');
+INSERT INTO `course` VALUES (17011816, 301, 130001, 2, 20, 0, 0, 10, 30, 'F');
+INSERT INTO `course` VALUES (17011817, 304, 130004, 1, 20, 0, 10, 20, 50, 'C0');
+INSERT INTO `course` VALUES (17011818, 301, 130001, 1, 20, 20, 10, 30, 80, 'A0');
 # 20
-INSERT INTO `course` VALUES (17011819, 308, 130008, 15, 20, 15, 20, 70, 'B+');
-INSERT INTO `course` VALUES (17011819, 310, 130011, 20, 25, 30, 20, 95, 'A+');
-INSERT INTO `course` VALUES (17011820, 301, 130001, 20, 10, 15, 20, 65, 'B0');
-INSERT INTO `course` VALUES (17011821, 310, 130011, 20, 10, 10, 20, 60, 'C+');
-INSERT INTO `course` VALUES (17011822, 301, 130001, 20, 10, 10, 20, 80, 'A0');
-INSERT INTO `course` VALUES (17011823, 301, 130001, 20, 0, 15, 0, 35, 'F');
-INSERT INTO `course` VALUES (17011824, 301, 130001, 20, 25, 25, 20, 90, 'A0');
-INSERT INTO `course` VALUES (17011825, 310, 130011, 20, 30, 30, 20, 100, 'A+');
+INSERT INTO `course` VALUES (17011819, 308, 130008, 1, 15, 20, 15, 20, 70, 'B+');
+INSERT INTO `course` VALUES (17011819, 310, 130011, 3, 20, 25, 30, 20, 95, 'A+');
+INSERT INTO `course` VALUES (17011820, 301, 130001, 1, 20, 10, 15, 20, 65, 'B0');
+INSERT INTO `course` VALUES (17011821, 310, 130011, 3, 20, 10, 10, 20, 60, 'C+');
+INSERT INTO `course` VALUES (17011822, 301, 130001, 2, 20, 10, 10, 20, 80, 'A0');
+INSERT INTO `course` VALUES (17011823, 301, 130001, 1, 20, 0, 15, 0, 35, 'F');
+INSERT INTO `course` VALUES (17011824, 301, 130005, 2, 20, 25, 25, 20, 90, 'A0');
+INSERT INTO `course` VALUES (17011825, 310, 130011, 3, 20, 30, 30, 20, 100, 'A+');
 
 
 -- ------------------------------
@@ -432,10 +435,7 @@ INSERT INTO `tuition` VALUES (17011823, 2021, 1, 4274000, 4274000, STR_TO_DATE('
 INSERT INTO `tuition` VALUES (17011824, 2021, 1, 4274000, 4274000, STR_TO_DATE('2021-02-18','%Y-%m-%d')); 
 INSERT INTO `tuition` VALUES (17011825, 2021, 1, 4274000, 4274000, STR_TO_DATE('2021-02-18','%Y-%m-%d')); 
 
-
 commit;
-
-
 
 
 

@@ -141,19 +141,19 @@
     `class_id` INT NOT NULL,
     `prof_id` INT NOT NULL,
     `name` VARCHAR(45) NOT NULL,
-    `day` VARCHAR(45) NULL,
-    `period` INT NULL,
-    `credit` INT NULL,
-    `time` INT NULL,
-    `dept_id` INT NULL,
-    `room` INT NULL,
-    PRIMARY KEY (`id`),
-    INDEX `idx_deptid` (`dept_id`),
+    `day` VARCHAR(45) NULL DEFAULT NULL,
+    `period` INT NULL DEFAULT NULL,
+    `credit` INT NULL DEFAULT NULL,
+    `time` INT NULL DEFAULT NULL,
+    `dept_id` INT NULL DEFAULT NULL,
+    `room` VARCHAR(45) NULL DEFAULT NULL,
+    `year` INT NULL,
+    `semester` INT NULL,
+    PRIMARY KEY (`id`, `class_id`),
+    INDEX `idx_deptid` (`dept_id` ASC) VISIBLE,
     CONSTRAINT `fk_lecture_course1`
       FOREIGN KEY (`id`)
-      REFERENCES `sejong`.`course` (`lecture_id`)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION)
+      REFERENCES `sejong`.`course` (`lecture_id`))
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
@@ -312,20 +312,74 @@
 5. **Professor**: 교수 사용자에 대해서 다음의 기능을 구현한다.
 
    - `show lectures`: 입력된 연도/학기에 본인이 강의했던 과목에 대한 모든 정보를 보여주는 기능
+
      - `(lecture)`: 위에서 표시된 과목 정보 중에서 하나를 “클릭”하면 해당 과목을 수강하는 (혹은 수강했던) 모든 학생에 대한 정보를 보여주는 기능
+     - `scoring`: 현재 본인이 강의하는 과목에 대한 성적 입력 기능
+
+     ~~~mysql
+     # 입력 연도/학기에 따른 강의 과목 보기
+     select * from lecture
+     where prof_id = (교수 ID) and year = (연도) and semester = (학기);
+     
+
    - `show students`: 현재 본인이 “지도”하는 학생에 대한 정보를 보여주는 기능
+
      - `(student)`: 위에서 표시된 학생 정보 중에서 하나를 “클릭”하면 해당 학생이 수강했던 (혹은 수강하고 있는) 모든 과목에 대한 “성적” 정보를 보여주는 기능
+
+       > 과목명도 보여줘야 하는가?
+
+     ~~~mysql
+     # 지도 학생 보기
+     select * from student
+     where prof_id = (교수 ID);
+     
+     # 학생 성적 보기
+     select * from course
+     where student_id = (학생 ID);
+     ~~~
+
+     
+
    - `my department`: 본인이 소속된 학과에 대한 정보(학과장 정보 포함)를 보여주는 기능
+
+     ~~~mysql
+     select * from department
+     where id = (select dept_id from student s
+     			where s.id = (학생 ID));
+     ~~~
+
+     
+
    - `time table`: 현재 학기에 대한 “강의 시간표” 표시 기능 (현재 학기에 강의하는 과목을 시간표 형태로 표시함. 시간표는 요일/교시)
-   - `scoring`: 현재 본인이 강의하는 과목에 대한 성적 입력 기능
+
+     > 이건 진짜 어떻게 해야하는것일까?
+
+     
 
    
 
 6. **Student**: 학생 사용자에 대해서 다음의 기능을 구현한다.
    - `show lectures`: 입력된 연도/학기에 본인이 수강했던 과목에 대한 모든 정보를 보여주는 기능
+
+     ~~~mysql
+     # 입력 연도/학기에 따른 수강 과목 보기
+     select l.*, c.gpa from lecture l, course c
+     where l.year=2021 and l.semester=1
+     	and c.student_id = 17011806
+     	and l.id=c.lecture_id
+     	and l.class_id = c.class_id;
+     	
+     	# 복잡한데.. 더 줄일 수 있을 것인가?
+     	#사실 이번 프로젝트에서는 크게 상관은 없다.
+     ~~~
+
+     
+
    - `time table`: 현재 학기에 본인이 수강하는 모든 과목을 시간표 형태로 표시하는 기능
+
    - `club`: 본인이 소속된 동아리에 대한 정보를 보여주는 기능
      단, 동아리 회장의 경우에는 동아리에 “속한” 모든 학생들에 대한 정보를 보여주는 기능이 구현되어야 함
+     
    - `report card`: 본인의 성적표를 보여주는 기능 : 과목번호/과목명/취득학점/평점은 반드시 표시되어야 하며, GPA (grade point average)도 표시되어야 한다.
 
 
