@@ -8,7 +8,7 @@ SHOW VARIABLES LIKE 'validate_password%';
 set global validate_password.length= 4 ;
 set global validate_password.length= 4 ;
 
-use sejong;
+use madang;
 show tables;
 
 -- drop table lecture;
@@ -64,3 +64,6 @@ where l.year=2021 and l.semester=1
 select lecture_id from course c
 where c.student_id = 17011806;
             
+            
+delete from student
+where id = 17011826;

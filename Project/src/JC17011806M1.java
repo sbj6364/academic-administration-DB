@@ -102,9 +102,9 @@ public class JC17011806M1 extends JFrame implements ActionListener {
 //      add("South", pn2);
       add("North", pn1);
       add("South", pn2);
-//      add("Center", scrollPane);
+      add("Center", scrollPane);
       add("Center", pn3);
-//      add("South", scrollPane2);
+      add("South", scrollPane2);
       
       btnInput.addActionListener(this);
       btnBook.addActionListener(this);

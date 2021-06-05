@@ -7,19 +7,19 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-DROP DATABASE IF EXISTS  sejong;
+DROP DATABASE IF EXISTS  madang;
 DROP USER IF EXISTS  madang@localhost;
 create user madang@localhost identified WITH mysql_native_password  by 'madang';
-create database sejong;
+create database madang;
 grant all privileges on madang.* to madang@localhost with grant option;
 commit;
 
-USE `sejong` ;
+USE `madang`;
 
 -- -----------------------------------------------------
--- Table `sejong`.`course`
+-- Table `madang`.`course`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sejong`.`course` (
+CREATE TABLE IF NOT EXISTS `madang`.`course` (
   `student_id` INT NOT NULL,
   `lecture_id` INT NOT NULL,
   `prof_id` INT NOT NULL,
@@ -40,71 +40,65 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `sejong`.`club_member`
+-- Table `madang`.`club_member`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sejong`.`club_member` (
+CREATE TABLE IF NOT EXISTS `madang`.`club_member` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `club_id` INT NOT NULL,
   `student_id` INT NOT NULL,
-  PRIMARY KEY (`club_id`, `student_id`),
-  INDEX `idx_clubid` (`club_id`),
-  INDEX `idx_studentid` (`student_id`)
-)
-ENGINE = InnoDB;
+  PRIMARY KEY (`id`),
+  INDEX `idx_clubid` (`club_id` ASC) VISIBLE,
+  INDEX `idx_studentid` (`student_id` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
 
 
 -- -----------------------------------------------------
--- Table `sejong`.`tuition`
+-- Table `madang`.`tuition`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sejong`.`tuition` (
+CREATE TABLE IF NOT EXISTS `madang`.`tuition` (
   `student_id` INT NOT NULL,
   `year` INT NOT NULL,
-  `semester` INT NULL,
-  `total_tuition` INT NULL,
-  `total_paid` INT NULL,
-  `last_paid` DATETIME NULL,
-  PRIMARY KEY (`student_id`)
---   INDEX `idx_studentid` (`student_id`)
-  )
-ENGINE = InnoDB;
+  `semester` INT NULL DEFAULT NULL,
+  `total_tuition` INT NULL DEFAULT NULL,
+  `total_paid` INT NULL DEFAULT NULL,
+  `last_paid` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`student_id`),
+  INDEX `idx_studentid` (`student_id` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `sejong`.`student`
+-- Table `madang`.`student`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sejong`.`student` (
+
+CREATE TABLE IF NOT EXISTS `madang`.`student` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
-  `address` VARCHAR(45) NULL,
-  `phone` VARCHAR(45) NULL,
-  `email` VARCHAR(45) NULL,
+  `address` VARCHAR(45) NULL DEFAULT NULL,
+  `phone` VARCHAR(45) NULL DEFAULT NULL,
+  `email` VARCHAR(45) NULL DEFAULT NULL,
   `dept_id` INT NOT NULL,
-  `subdept_id` INT NULL,
+  `subdept_id` INT NULL DEFAULT NULL,
   `prof_id` INT NOT NULL,
   `account` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `idx_deptid` (`dept_id`),
-  CONSTRAINT `fk_student_course1`
-    FOREIGN KEY (`id`)
-    REFERENCES `sejong`.`course` (`student_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_student_club_member1`
-    FOREIGN KEY (`id`)
-    REFERENCES `sejong`.`club_member` (`student_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_student_tuition1`
-    FOREIGN KEY (`id`)
-    REFERENCES `sejong`.`tuition` (`student_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  INDEX `idx_deptid` (`dept_id` ASC) VISIBLE,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
 
 
 -- -----------------------------------------------------
--- Table `sejong`.`professor`
+-- Table `madang`.`professor`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sejong`.`professor` (
+CREATE TABLE IF NOT EXISTS `madang`.`professor` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `address` VARCHAR(45) NULL,
@@ -115,33 +109,31 @@ CREATE TABLE IF NOT EXISTS `sejong`.`professor` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_professor_course`
     FOREIGN KEY (`id`)
-    REFERENCES `sejong`.`course` (`prof_id`)
+    REFERENCES `madang`.`course` (`prof_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sejong`.`club`
+-- Table `madang`.`club`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sejong`.`club` (
+CREATE TABLE IF NOT EXISTS `madang`.`club` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
-  `student_num` INT NULL,
-  `president_id` INT NULL,
-  `room` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_club_club_member1`
-    FOREIGN KEY (`id`)
-    REFERENCES `sejong`.`club_member` (`club_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  `student_num` INT NULL DEFAULT NULL,
+  `president_id` INT NULL DEFAULT NULL,
+  `room` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
 
 -- -----------------------------------------------------
--- Table `sejong`.`lecture`
+-- Table `madang`.`lecture`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sejong`.`lecture` (
+CREATE TABLE IF NOT EXISTS `madang`.`lecture` (
   `id` INT NOT NULL,
   `class_id` INT NOT NULL,
   `prof_id` INT NOT NULL,
@@ -158,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `sejong`.`lecture` (
   INDEX `idx_deptid` (`dept_id` ASC) VISIBLE,
   CONSTRAINT `fk_lecture_course1`
     FOREIGN KEY (`id`)
-    REFERENCES `sejong`.`course` (`lecture_id`))
+    REFERENCES `madang`.`course` (`lecture_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -169,9 +161,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `sejong`.`department`
+-- Table `madang`.`department`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sejong`.`department` (
+CREATE TABLE IF NOT EXISTS `madang`.`department` (
   `id` INT NOT NULL,
   `name` VARCHAR(20) NOT NULL,
   `office` VARCHAR(15) NULL DEFAULT NULL,
@@ -179,12 +171,12 @@ CREATE TABLE IF NOT EXISTS `sejong`.`department` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_department_student1`
     FOREIGN KEY (`id`)
-    REFERENCES `sejong`.`student` (`dept_id`)
+    REFERENCES `madang`.`student` (`dept_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_department_lecture1`
     FOREIGN KEY (`id`)
-    REFERENCES `sejong`.`lecture` (`dept_id`)
+    REFERENCES `madang`.`lecture` (`dept_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -207,51 +199,53 @@ COLLATE = utf8mb4_0900_ai_ci;
 # 
 
 
-INSERT INTO `student` VALUES(17011801, '김진명', '경기도 광주시', '010-2345-2341', 'kmj@sejong.ac.kr', 3232, NULL, 130010, '케이뱅크 123-123456-12413');
-INSERT INTO `student` VALUES(17011802, '박세환', '경기도 화성시', '010-5423-1435', 'psh@sejong.ac.kr', 3231, NULL, 130009, '국민은행 535-234252-45235');
-INSERT INTO `student` VALUES(17011803, '장재호', '서울특별시 은평구', '010-7634-5632', 'jjh@sejong.ac.kr', 3220, NULL, 130007, '농협 343-523263-34231');
-INSERT INTO `student` VALUES(17011804, '배성현', '경상남도 포항시', '010-3646-2468', 'bsh@sejong.ac.kr', 3231, NULL, 130009, '농협 342-234212-23415');
-INSERT INTO `student` VALUES(17011805, '강민수', '경기도 여주시', '010-4573-2346', 'kms@sejong.ac.kr', 3231, NULL, 130009, '국민은행 734-452346-23456');
+INSERT INTO `student` VALUES(17011801, '김진명', '경기도 광주시', '010-2345-2341', 'kmj@madang.ac.kr', 3232, NULL, 130010, '케이뱅크 123-123456-12413');
+INSERT INTO `student` VALUES(17011802, '박세환', '경기도 화성시', '010-5423-1435', 'psh@madang.ac.kr', 3231, NULL, 130009, '국민은행 535-234252-45235');
+INSERT INTO `student` VALUES(17011803, '장재호', '서울특별시 은평구', '010-7634-5632', 'jjh@madang.ac.kr', 3220, NULL, 130007, '농협 343-523263-34231');
+INSERT INTO `student` VALUES(17011804, '배성현', '경상남도 포항시', '010-3646-2468', 'bsh@madang.ac.kr', 3231, NULL, 130009, '농협 342-234212-23415');
+INSERT INTO `student` VALUES(17011805, '강민수', '경기도 여주시', '010-4573-2346', 'kms@madang.ac.kr', 3231, NULL, 130009, '국민은행 734-452346-23456');
 INSERT INTO `student` VALUES(17011806, '서병준', '서울특별시 광진구', '010-4181-6364', 'sbj6364@daum.net', 3232, 3225, 130010, '기업은행 979-012182-01-012');
-INSERT INTO `student` VALUES(17011807, '윤혜정', '서울특별시 중랑구', '010-2356-8364', 'yhj@sejong.ac.kr', 3225, NULL, 130008, '국민은행 646-352536-43523');
-INSERT INTO `student` VALUES(17011808, '곽경민', '서울특별시 광진구', '010-7234-1786', 'kkm@sejong.ac.kr', 2233, NULL, 130004, '농협 123-42352-234125');
-INSERT INTO `student` VALUES(17011809, '문이선', '광주광역시 서구', '010-5362-2351', 'mis@sejong.ac.kr', 3232, 3225, 130010, '우리은행 12343-45456-342');
-INSERT INTO `student` VALUES(17011810, '이주혁', '서울특별시 광진구', '010-3472-3646', 'ljh@sejong.ac.kr', 3220, NULL, 130007, '국민은행 3425-3423-235673');
+INSERT INTO `student` VALUES(17011807, '윤혜정', '서울특별시 중랑구', '010-2356-8364', 'yhj@madang.ac.kr', 3225, NULL, 130008, '국민은행 646-352536-43523');
+INSERT INTO `student` VALUES(17011808, '곽경민', '서울특별시 광진구', '010-7234-1786', 'kkm@madang.ac.kr', 2233, NULL, 130004, '농협 123-42352-234125');
+INSERT INTO `student` VALUES(17011809, '문이선', '광주광역시 서구', '010-5362-2351', 'mis@madang.ac.kr', 3232, 3225, 130010, '우리은행 12343-45456-342');
+INSERT INTO `student` VALUES(17011810, '이주혁', '서울특별시 광진구', '010-3472-3646', 'ljh@madang.ac.kr', 3220, NULL, 130007, '국민은행 3425-3423-235673');
 # 10 아래부터 과, 교수님, 계좌번호 바꿔야 함
-INSERT INTO `student` VALUES(17011811, '공성호', '경상남도 창원시', '010-6753-2341', 'kshsejong.ac.kr', 2769, NULL, 130003, '새마을금고 143-123456-12413');
-INSERT INTO `student` VALUES(17011812, '김진현', '경상남도 창원시', '010-5423-5323', 'kjh@sejong.ac.kr', 2433, NULL, 130005, '카카오뱅크 234-234252-45235');
-INSERT INTO `student` VALUES(17011813, '안병건', '서울특별시 노원구', '010-6477-5632', 'abk@sejong.ac.kr', 2930, NULL, 130002, '신한은행 343-324553-34231');
-INSERT INTO `student` VALUES(17011814, '이종욱', '서울특별시 노원구', '010-3646-4532', 'ljw@sejong.ac.kr', 2930, NULL, 130002, '신한은행 342-234212-65347');
-INSERT INTO `student` VALUES(17011815, '권승필', '경기도 화성시', '010-3456-2346', 'ksp@sejong.ac.kr', 3215, NULL, 130006, '하나은행 734-345236-23456');
+INSERT INTO `student` VALUES(17011811, '공성호', '경상남도 창원시', '010-6753-2341', 'kshmadang.ac.kr', 2769, NULL, 130003, '새마을금고 143-123456-12413');
+INSERT INTO `student` VALUES(17011812, '김진현', '경상남도 창원시', '010-5423-5323', 'kjh@madang.ac.kr', 2433, NULL, 130005, '카카오뱅크 234-234252-45235');
+INSERT INTO `student` VALUES(17011813, '안병건', '서울특별시 노원구', '010-6477-5632', 'abk@madang.ac.kr', 2930, NULL, 130002, '신한은행 343-324553-34231');
+INSERT INTO `student` VALUES(17011814, '이종욱', '서울특별시 노원구', '010-3646-4532', 'ljw@madang.ac.kr', 2930, NULL, 130002, '신한은행 342-234212-65347');
+INSERT INTO `student` VALUES(17011815, '권승필', '경기도 화성시', '010-3456-2346', 'ksp@madang.ac.kr', 3215, NULL, 130006, '하나은행 734-345236-23456');
 INSERT INTO `student` VALUES(17011816, '권도윤', '서울특별시 노원구', '010-6453-4643', 'kdy@daum.net', 3225, NULL, 130008, '기업은행 346-012182-01-012');
-INSERT INTO `student` VALUES(17011817, '김민석', '경상남도 통영시', '010-4532-8364', 'kms@sejong.ac.kr', 3232, NULL, 130010, '경남은행 646-267573-43523');
-INSERT INTO `student` VALUES(17011818, '김지오', '경기도 분당시', '010-7234-6472', 'kjo@sejong.ac.kr', 3225, NULL, 130008, '농협 123-42352-53452');
-INSERT INTO `student` VALUES(17011819, '김연우', '경기도 분당시', '010-3426-2351', 'kyw@sejong.ac.kr', 3232, NULL, 130010, '우리은행 34253-545656-745');
-INSERT INTO `student` VALUES(17011820, '문승재', '제주특별자치도 서귀포시', '010-3472-4367', 'msj@sejong.ac.kr', 3225, NULL, 130008, '기업은행 453-534657-54534');
+INSERT INTO `student` VALUES(17011817, '김민석', '경상남도 통영시', '010-4532-8364', 'kms@madang.ac.kr', 3232, NULL, 130010, '경남은행 646-267573-43523');
+INSERT INTO `student` VALUES(17011818, '김지오', '경기도 분당시', '010-7234-6472', 'kjo@madang.ac.kr', 3225, NULL, 130008, '농협 123-42352-53452');
+INSERT INTO `student` VALUES(17011819, '김연우', '경기도 분당시', '010-3426-2351', 'kyw@madang.ac.kr', 3232, NULL, 130010, '우리은행 34253-545656-745');
+INSERT INTO `student` VALUES(17011820, '문승재', '제주특별자치도 서귀포시', '010-3472-4367', 'msj@madang.ac.kr', 3225, NULL, 130008, '기업은행 453-534657-54534');
 # 20
-INSERT INTO `student` VALUES(17011821, '박준희', '경기도 분당시', '010-8765-2371', 'pjh@sejong.ac.kr', 3232, NULL, 130010, '국민은행 536-564574-12413');
-INSERT INTO `student` VALUES(17011822, '안정연', '서울특별시 광진구', '010-5423-5673', 'ajy@sejong.ac.kr', 3210, NULL, 130001, '국민은행 786-234252-652788');
-INSERT INTO `student` VALUES(17011823, '원종서', '서울특별시 광진구', '010-4532-5632', 'wjs@sejong.ac.kr', 3210, NULL, 130001, '하나은행 560-875408-02345');
-INSERT INTO `student` VALUES(17011824, '윤상혁', '서울특별시 광진구', '010-3646-1634', 'ysh@sejong.ac.kr', 3210, NULL, 130001, '신한은행 245-657489-45347');
-INSERT INTO `student` VALUES(17011825, '이다은', '경기도 포천시', '010-4674-6453', 'lde@sejong.ac.kr', 3232, NULL, 130010, '국민은행 236-564322-76483');
+INSERT INTO `student` VALUES(17011821, '박준희', '경기도 분당시', '010-8765-2371', 'pjh@madang.ac.kr', 3232, NULL, 130010, '국민은행 536-564574-12413');
+INSERT INTO `student` VALUES(17011822, '안정연', '서울특별시 광진구', '010-5423-5673', 'ajy@madang.ac.kr', 3210, NULL, 130001, '국민은행 786-234252-652788');
+INSERT INTO `student` VALUES(17011823, '원종서', '서울특별시 광진구', '010-4532-5632', 'wjs@madang.ac.kr', 3210, NULL, 130001, '하나은행 560-875408-02345');
+INSERT INTO `student` VALUES(17011824, '윤상혁', '서울특별시 광진구', '010-3646-1634', 'ysh@madang.ac.kr', 3210, NULL, 130001, '신한은행 245-657489-45347');
+INSERT INTO `student` VALUES(17011825, '이다은', '경기도 포천시', '010-4674-6453', 'lde@madang.ac.kr', 3232, NULL, 130010, '국민은행 236-564322-76483');
+
+INSERT INTO `student` VALUES(17011826, '홍길동', '서울특별시 광진구', '010-1234-2323', 'hgd@madang.ac.kr', 3232, NULL, 130001, '국민은행 236-342243-76483');
 
 
 -- ------------------------------
 -- Professor
 -- 교수 - 학생 관계 특성상 10명만 insert
 -- ------------------------------
-INSERT INTO `professor` VALUES (130001, '신동일', '서울특별시 광진구', '02-3408-3241', 'dshin@sejong.ac.kr', 3210, NULL);
-INSERT INTO `professor` VALUES (130002, '김연아', '서울특별시 중랑구', '02-3408-2000', 'kya@sejong.ac.kr', 2930, NULL); 
-INSERT INTO `professor` VALUES (130003, '장미란', '서울특별시 광진구', '02-3408-2001', 'jmr@sejong.ac.kr', 2769, NULL);
-INSERT INTO `professor` VALUES (130004, '추신수', '서울특별시 노원구', '02-3408-2002', 'css@sejong.ac.kr', 2233, NULL);
-INSERT INTO `professor` VALUES (130005, '박세리', '서울특별시 은평구', '02-3408-2003', 'psr@sejong.ac.kr', 2433, NULL);
-INSERT INTO `professor` VALUES (130006, '박지성', '서울특별시 마포구', '02-3408-2004', 'pjs@sejong.ac.kr', 3215, NULL);
-INSERT INTO `professor` VALUES (130007, '손흥민', '서울특별시 영등포구', '02-3408-2005', 'shm@sejong.ac.kr', 3220, NULL); 
-INSERT INTO `professor` VALUES (130008, '이강인', '경기도 분당시', '02-3408-2006', 'lki@sejong.ac.kr', 3225, NULL);
-INSERT INTO `professor` VALUES (130009, '서장훈', '서울특별시 광진구', '02-3408-2007', 'sjh@sejong.ac.kr', 3231, NULL);
-INSERT INTO `professor` VALUES (130010, '유재석', '서울특별시 마포구', '02-3408-2008', 'yjs@sejong.ac.kr', 3232, NULL);
+INSERT INTO `professor` VALUES (130001, '신동일', '서울특별시 광진구', '02-3408-3241', 'dshin@madang.ac.kr', 3210, NULL);
+INSERT INTO `professor` VALUES (130002, '김연아', '서울특별시 중랑구', '02-3408-2000', 'kya@madang.ac.kr', 2930, NULL); 
+INSERT INTO `professor` VALUES (130003, '장미란', '서울특별시 광진구', '02-3408-2001', 'jmr@madang.ac.kr', 2769, NULL);
+INSERT INTO `professor` VALUES (130004, '추신수', '서울특별시 노원구', '02-3408-2002', 'css@madang.ac.kr', 2233, NULL);
+INSERT INTO `professor` VALUES (130005, '박세리', '서울특별시 은평구', '02-3408-2003', 'psr@madang.ac.kr', 2433, NULL);
+INSERT INTO `professor` VALUES (130006, '박지성', '서울특별시 마포구', '02-3408-2004', 'pjs@madang.ac.kr', 3215, NULL);
+INSERT INTO `professor` VALUES (130007, '손흥민', '서울특별시 영등포구', '02-3408-2005', 'shm@madang.ac.kr', 3220, NULL); 
+INSERT INTO `professor` VALUES (130008, '이강인', '경기도 분당시', '02-3408-2006', 'lki@madang.ac.kr', 3225, NULL);
+INSERT INTO `professor` VALUES (130009, '서장훈', '서울특별시 광진구', '02-3408-2007', 'sjh@madang.ac.kr', 3231, NULL);
+INSERT INTO `professor` VALUES (130010, '유재석', '서울특별시 마포구', '02-3408-2008', 'yjs@madang.ac.kr', 3232, NULL);
 -- 10
-INSERT INTO `professor` VALUES (130011, '강호동', '서울특별시 관악구', '02-3408-2009', 'khd@sejong.ac.kr', 3232, NULL);
+INSERT INTO `professor` VALUES (130011, '강호동', '서울특별시 관악구', '02-3408-2009', 'khd@madang.ac.kr', 3232, NULL);
 
 
 -- ------------------------------
@@ -366,39 +360,39 @@ INSERT INTO `club` VALUES (5, 'Intro', 6, 17011819, '학B205');
 -- ------------------------------
 -- Club Member
 -- ------------------------------
-INSERT INTO `club_member` VALUES (1, 17011801);
-INSERT INTO `club_member` VALUES (1, 17011806);
-INSERT INTO `club_member` VALUES (1, 17011809);
-INSERT INTO `club_member` VALUES (1, 17011820);
+INSERT INTO `club_member` (`club_id`, `student_id`)  VALUES (1, 17011801);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (1, 17011806);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (1, 17011809);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (1, 17011820);
 
-INSERT INTO `club_member` VALUES (2, 17011806);
-INSERT INTO `club_member` VALUES (2, 17011808);
-INSERT INTO `club_member` VALUES (2, 17011811);
-INSERT INTO `club_member` VALUES (2, 17011812);
-INSERT INTO `club_member` VALUES (2, 17011824);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (2, 17011806);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (2, 17011808);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (2, 17011811);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (2, 17011812);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (2, 17011824);
 
-INSERT INTO `club_member` VALUES (3, 17011802);
-INSERT INTO `club_member` VALUES (3, 17011803);
-INSERT INTO `club_member` VALUES (3, 17011806);
-INSERT INTO `club_member` VALUES (3, 17011807);
-INSERT INTO `club_member` VALUES (3, 17011809);
-INSERT INTO `club_member` VALUES (3, 17011814);
-INSERT INTO `club_member` VALUES (3, 17011815);
-INSERT INTO `club_member` VALUES (3, 17011817);
-INSERT INTO `club_member` VALUES (3, 17011821);
-INSERT INTO `club_member` VALUES (3, 17011822);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (3, 17011802);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (3, 17011803);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (3, 17011806);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (3, 17011807);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (3, 17011809);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (3, 17011814);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (3, 17011815);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (3, 17011817);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (3, 17011821);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (3, 17011822);
 
-INSERT INTO `club_member` VALUES (4, 17011803);
-INSERT INTO `club_member` VALUES (4, 17011818);
-INSERT INTO `club_member` VALUES (4, 17011824);
-INSERT INTO `club_member` VALUES (4, 17011825);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (4, 17011803);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (4, 17011818);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (4, 17011824);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (4, 17011825);
 
-INSERT INTO `club_member` VALUES (6, 17011804);
-INSERT INTO `club_member` VALUES (6, 17011810);
-INSERT INTO `club_member` VALUES (6, 17011816);
-INSERT INTO `club_member` VALUES (6, 17011819);
-INSERT INTO `club_member` VALUES (6, 17011823);
-INSERT INTO `club_member` VALUES (6, 17011824);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (6, 17011804);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (6, 17011810);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (6, 17011816);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (6, 17011819);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (6, 17011823);
+INSERT INTO `club_member` (`club_id`, `student_id`) VALUES (6, 17011824);
 
 
 
