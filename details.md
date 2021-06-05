@@ -342,6 +342,7 @@
    - `my department`: 본인이 소속된 학과에 대한 정보(학과장 정보 포함)를 보여주는 기능
 
      ~~~mysql
+     # 소속 학과 보기
      select * from department
      where id = (select dept_id from student s
      			where s.id = (학생 ID));
