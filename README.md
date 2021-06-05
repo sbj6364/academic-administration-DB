@@ -41,7 +41,7 @@
 
 ### Environment | 개발 환경
 
-- 사용자 인터페이스는 반드시 GUI (Graphical User Interface)를 사용한다. 단, GUI 구동에 필요한 라이브러리는 기본 JDK에 포함되어 있는 것으로 한정한다. (별도의 설치가 필요한 GUI pacakage는 인정되지 않고 0점 처리됨)
+- 사용자 인터페이스는 반드시 GUI (Graphical User Interface)를 사용한다. 단, GUI 구동에 필요한 라이브러리는 기본 JDK에 포함되어 있는 것으로 한정한다. (별도의 설치가 필요한 GUI package는 인정되지 않고 0점 처리됨)
 - 개발도구는 반드시 Eclipse를 사용한다. (이외의 다른 개발도구로 만들어진 소스코드는 채점하지 않고 0점 처리됨)
 
  

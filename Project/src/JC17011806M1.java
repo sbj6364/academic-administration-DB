@@ -16,7 +16,7 @@ public class JC17011806M1 extends JFrame implements ActionListener {
    JButton btnInput, btnBook, btnOrders, btnCustomer, btn1, btn2, btn3, btnClear, btnResetAll;
    JTextField f1, f2, f3, f4, f5;
    JTextArea txtResult, txtStatus;
-   JPanel pn1, pn2;
+   JPanel pn1, pn2, pn3;
 
    static Connection con;
    Statement stmt;
@@ -78,16 +78,19 @@ public class JC17011806M1 extends JFrame implements ActionListener {
 	  f5.setText("orderdate");
 	  
 	  
-	   pn2.add(f1);
-	   pn2.add(f2);
-	   pn2.add(f3);
-	   pn2.add(f4);
-	   pn2.add(f5);
-	   pn2.add(btnInput);
+	  pn2.add(f1);
+	  pn2.add(f2);
+	  pn2.add(f3);
+	  pn2.add(f4);
+	  pn2.add(f5);
+	  pn2.add(btnInput);
 	   
 	  f1.setBounds(30, 170, WIDTH, HEIGHT);
 	  f2.setBounds(30, 200, WIDTH, HEIGHT);
       
+	  pn3 = new JPanel();
+	  pn3.add(btnBook);
+	  
       
       txtResult.setEditable(false);
       txtStatus.setEditable(false);
@@ -95,9 +98,12 @@ public class JC17011806M1 extends JFrame implements ActionListener {
       JScrollPane scrollPane = new JScrollPane(txtResult);
       JScrollPane scrollPane2 = new JScrollPane(txtStatus);
       
+//      add("North", pn1);
+//      add("South", pn2);
       add("North", pn1);
       add("South", pn2);
-      add("Center", scrollPane);
+//      add("Center", scrollPane);
+      add("Center", pn3);
 //      add("South", scrollPane2);
       
       btnInput.addActionListener(this);
