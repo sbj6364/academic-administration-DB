@@ -1,9 +1,13 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import java.sql.*;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -128,14 +132,14 @@ class JPanelOfAddStudent extends JPanel {
 
 	private void addDefaultLabel() {
 		ArrayList<String> infoList = new ArrayList<>();
-		infoList.add("* StudentID");
+		infoList.add("* Student ID");
 		infoList.add("* Name");
 		infoList.add("* Address");
 		infoList.add("* Phone");
 		infoList.add("* Email");
-		infoList.add("* Department");
-		infoList.add("  Subdepartment");
-		infoList.add("* Professor");
+		infoList.add("* Department ID");
+		infoList.add("  Subdepartment ID");
+		infoList.add("* Professor ID");
 		infoList.add("* Account");
 
 		int x = 50, y = 100, m = 130, n = 30;
@@ -214,6 +218,61 @@ class JPanelOfAdminMain extends JPanel { // 1��° �г�
 		}
 	}
 }
+//
+//@SuppressWarnings("serial")
+//class JPanelOfProfessorMain extends JPanel {
+//	private JButton btn_p_lec, btn_p_stu, btn_tt;
+//	private JPanelTest win;
+//
+//	public JPanelOfProfessorMain(JPanelTest win) {
+//		this.win = win;
+//		setLayout(null);
+//		
+//
+//		JButton btn_p_lec = new JButton("My Lectures");
+//		btn_p_lec.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				win.change("jpanelOfAddStudent");
+//			}
+//		});
+//		
+//		JButton btn_p_stu = new JButton("My Students");
+//		btn_p_stu.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				win.change("jpanelOfAddStudent");
+//			}
+//		});
+//		
+//		JButton btn_tt = new JButton("Time Table");
+//		btn_tt.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				win.change("jpanelOfAddStudent");
+//			}
+//		});
+//		
+//		btn_p_lec.setBounds(30, 170, 190, 50);
+//		btn_p_stu.setBounds(250, 170, 190, 50);
+//		btn_tt.setBounds(470, 170, 190, 50);
+//
+//		add(btn_p_lec);
+//		add(btn_p_stu);
+//		add(btn_tt);
+//
+//
+//
+//	class MyActionListener implements ActionListener { // ��ư Ű ������ �г� 2�� ȣ��
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			win.change("panel02");
+//		}
+//	}
+//}
 
 @SuppressWarnings("serial")
 class JPanel01 extends JPanel { // 1��° �г�
@@ -338,7 +397,9 @@ class JPanelTest extends JFrame {
 	public JPanel01 jpanel01 = null;
 	public JPanel02 jpanel02 = null;
 	public JPanelOfAdminMain jpanelOfAdminMain = null;
+//	public JPanelOfProfessorMain jpanelOfProfessorMain = null;
 	public JPanelOfAddStudent jpanelOfAddStudent = null;
+
 
 	JPanelTest(){
 		txtStatus = new JTextArea(5,20);
@@ -364,6 +425,11 @@ class JPanelTest extends JFrame {
 		} else if (panelName.equals("jpanelOfAddStudent")) {
 			getContentPane().removeAll();
 			getContentPane().add(jpanelOfAddStudent);
+			revalidate();
+			repaint();
+		} else if (panelName.equals("jpanelOfProfessorMain")) {
+			getContentPane().removeAll();
+//			getContentPane().add(jpanelOfProfessorMain);
 			revalidate();
 			repaint();
 		} else {
