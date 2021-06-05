@@ -6,7 +6,7 @@
 
 ### EER Diagram | EER 다이어그램
 
-![eerd](./sejong_erd.png)
+![eerd](./erd/sejong_erd.png)
 
 
 
