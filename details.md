@@ -424,6 +424,6 @@
 - lecture: 15개
 - course: 28개
 - club: 5개
-- club_member: 29명
+- club_member: 29개
 - tuition: 25개
 
