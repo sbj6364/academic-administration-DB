@@ -67,3 +67,5 @@ where c.student_id = 17011806;
             
 delete from student
 where id = 17011826;
+
+show databases;
