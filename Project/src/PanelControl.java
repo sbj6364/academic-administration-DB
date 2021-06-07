@@ -275,7 +275,7 @@ class JPanelOfAdminMain extends JPanel { // 1��° �г�
 //}
 
 @SuppressWarnings("serial")
-class JPanel01 extends JPanel { // 1��° �г�
+class JPanel01 extends JPanel { 
 
 	private JButton jButton1;
 	private JButton btn1, btn2, btn3;

@@ -307,10 +307,33 @@
    - 데이터베이스에 포함된 모든 테이블에 대한 입력/삭제/변경 기능  
      (단, 삭제/변경은 “1개”의 고정된 특정 조건이 아닌 “조건식”을 입력 받아서 삭제/변경하는 방식으로 구현해야 함)
 
-     - `insert`
-     - `delete`
-     -  `update`
-
+     - `insert`: 각 테이블마다 모든 attribute에 대한 입력 textbox 생성, 해당 값 입력
+     
+       ~~~mysql
+       insert into [테이블]([속성]) values([입력값])
+       ~~~
+     
+       
+     
+     - `delete`: 각 테이블마다 조건식(primary key 값)입력 받아 삭제
+     
+       ~~~mysql
+       delete from [테이블]
+       where [pk] = [조건값]
+       ~~~
+     
+       
+     
+     - `update`: 각 테이블마다 변경하고자 하는 tuple의 조건식(primary key 값)입력 textbox, 해당 튜플에서 변경하고자 하는 attribute 입력 textbox, 값 입력 textbox 생성.
+     
+       ~~~mysql
+       update [테이블]
+       set [속성] = [입력값]
+       where [pk] = [조건값]
+       ~~~
+     
+       
+     
    - 전체 테이블 보기 기능: 모든 테이블의 내용을 보여주는 기능
 
      - `student`
