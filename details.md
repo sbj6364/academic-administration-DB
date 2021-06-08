@@ -1,12 +1,13 @@
 # Requirements Statement / Schema
 > **요구사항 명세서 및 스키마 정의** 데이터베이스 설계에 필요한 사용자 요구사항을 항목별로 정리한 내용.  
-> (사용자 인터페이스 및 구현될 삽입/삭제/변경/검색 기능과 관련된 요구사항도 모두 포함)
+>
+> 본래 2인 1조 과제이기에, 타 과라는 특성 상 열심히 연락을 돌려보았지만 팀원을 구할 수 없어 혼자 진행하게 되었다.
 
 
 
 ### EER Diagram | EER 다이어그램
 
-![eerd](./erd/sejong_erd.png)
+![eerd](./img/sejong_erd.png)
 
 
 
@@ -292,7 +293,7 @@
    
 3. 접속 후에는 관리자/교수/학생에 대한 기능을 구현한다. 단, 채점의 용이성을 위해서 관리자/일반사용자 모두 madang 계정을 이용한다. 즉, madang 계정으로 자동 로그인 한후, GUI 화면에서 관리자/교수/학생을 택하여 다음 화면으로 넘어가는 형태로 구현한다.
 
-   > sql level까지는 안내려옴
+   ![Login](./img/1.png)
 
    
 
@@ -304,6 +305,8 @@
 
      > sejong.sql 파일 불러와서 실행
 
+     ![reset](./img/2.png)
+
    - 데이터베이스에 포함된 모든 테이블에 대한 입력/삭제/변경 기능  
      (단, 삭제/변경은 “1개”의 고정된 특정 조건이 아닌 “조건식”을 입력 받아서 삭제/변경하는 방식으로 구현해야 함)
 
@@ -313,7 +316,11 @@
        insert into [테이블]([속성]) values([입력값])
        ~~~
      
-       
+       ![insert](./img/3.png)
+     
+       - Invalid 값에 대해서는 error 표시!
+     
+       ![error](./img/12.png)
      
      - `delete`: 각 테이블마다 조건식(primary key 값)입력 받아 삭제
      
@@ -330,12 +337,12 @@
        update [테이블]
        set [속성] = [입력값]
        where [pk] = [조건값]
+       
        ~~~
      
-       
-     
    - 전체 테이블 보기 기능: 모든 테이블의 내용을 보여주는 기능. `view tables` 버튼 안에 8개 버튼.
-
+     ![showtbls](./img/4.png)
+     
      - `student`
      - `professor`
      - `department`
@@ -348,8 +355,10 @@
    
 
 5. **Professor**: 교수 사용자에 대해서 다음의 기능을 구현한다.
+   ![plectures](./img/5.png)
 
    - `show lectures`: 입력된 연도/학기에 본인이 강의했던 과목에 대한 모든 정보를 보여주는 기능
+     ![plectures](./img/6.png)
 
      - `(lecture)`: 위에서 표시된 과목 정보 중에서 하나를 “클릭”하면 해당 과목을 수강하는 (혹은 수강했던) 모든 학생에 대한 정보를 보여주는 기능
      - `scoring`: 현재 본인이 강의하는 과목에 대한 성적 입력 기능
@@ -360,6 +369,7 @@
      where prof_id = (교수 ID) and year = (연도) and semester = (학기);
 
    - `show students`: 현재 본인이 “지도”하는 학생에 대한 정보를 보여주는 기능
+     ![plectures](./img/7.png)
 
      - `(student)`: 위에서 표시된 학생 정보 중에서 하나를 “클릭”하면 해당 학생이 수강했던 (혹은 수강하고 있는) 모든 과목에 대한 “성적” 정보를 보여주는 기능
 
@@ -378,6 +388,7 @@
      
 
    - `my department`: 본인이 소속된 학과에 대한 정보(학과장 정보 포함)를 보여주는 기능
+     ![plectures](./img/8.png)
 
      ~~~mysql
      # 소속 학과 보기
@@ -390,14 +401,15 @@
 
    - `time table`: 현재 학기에 대한 “강의 시간표” 표시 기능 (현재 학기에 강의하는 과목을 시간표 형태로 표시함. 시간표는 요일/교시)
 
-     > 이건 진짜 어떻게 해야하는것일까?
-
      
 
    
 
 6. **Student**: 학생 사용자에 대해서 다음의 기능을 구현한다.
+   ![plectures](./img/9.png)
+
    - `show lectures`: 입력된 연도/학기에 본인이 수강했던 과목에 대한 모든 정보를 보여주는 기능
+     ![plectures](./img/10.png)
 
      ~~~mysql
      # 입력 연도/학기에 따른 수강 과목 보기
@@ -406,9 +418,7 @@
      	and c.student_id = (학생 ID)
      	and l.id = c.lecture_id
      	and l.class_id = c.class_id;
-     	
-     # 복잡한데.. 더 줄일 수 있을 것인가?
-     # 사실 이번 프로젝트에서는 크게 상관은 없다.
+     
      ~~~
 
      
@@ -417,6 +427,7 @@
 
    - `club`: 본인이 소속된 동아리에 대한 정보를 보여주는 기능
      단, 동아리 회장의 경우에는 동아리에 “속한” 모든 학생들에 대한 정보를 보여주는 기능이 구현되어야 함
+     ![plectures](./img/11.png)
      
    - `report card`: 본인의 성적표를 보여주는 기능 : 과목번호/과목명/취득학점/평점은 반드시 표시되어야 하며, GPA (grade point average)도 표시되어야 한다.
 
@@ -456,4 +467,4 @@
 
 ### Scoring | 채점 기준
 
-<img src="./img/scoring.png" alt="scoring" style="zoom:50%;" />
+<img src="./img/scoring.png" alt="scoring" style="zoom:30%;" />
