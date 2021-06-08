@@ -23,6 +23,7 @@ class JPanelOfAddStudent extends JPanel {
 	private HashMap<String, JTextField> textFieldMap;
 	private JPasswordField passwordField;
 	private JPanelTest win;
+	private JLabel title;
 
 	public JPanelOfAddStudent(JPanelTest win) {
 		setLayout(null);
@@ -30,11 +31,14 @@ class JPanelOfAddStudent extends JPanel {
 		addDefaultLabel();
 		addDefaultEditText();
 		
-		
+		JLabel title = new JLabel("Student Management");
 
 		JButton btn = new JButton("Save");
+		
+		title.setBounds(450, 5, 200, 50);
 		btn.setSize(100, 30);
 		btn.setLocation(230, 470);
+		add(title);
 		add(btn);
 		btn.addActionListener(new ActionListener() {
 
@@ -179,35 +183,122 @@ class JPanelOfAddStudent extends JPanel {
 }
 
 @SuppressWarnings("serial")
-class JPanelOfAdminMain extends JPanel { // 1��° �г�
+class JPanelOfAdminMain extends JPanel {
 
-	private JButton btn1, btn2, btn3;
+	private JButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8;
+	private JLabel title;
 	private JPanelTest win;
 
 	public JPanelOfAdminMain(JPanelTest win) {
 		this.win = win;
 		setLayout(null);
+		JLabel title = new JLabel("Admin Mode");
 
-		JButton btn1 = new JButton("Professor Mananagement");
-		JButton btn2 = new JButton("Student Management");
+		JButton btn1 = new JButton("Professor");
+		JButton btn2 = new JButton("Student");
+		JButton btn3 = new JButton("Department");
+		JButton btn4 = new JButton("Lecture");
+		JButton btn5 = new JButton("Course");
+		JButton btn6 = new JButton("Club");
+		JButton btn7 = new JButton("Club Member");
+		JButton btn8 = new JButton("Tuition");
+		
+		title.setBounds(460, 5, 200, 50);
+		
+		btn1.setBounds(125, 200, 150, 100);
+		btn2.setBounds(325, 200, 150, 100);
+		btn3.setBounds(525, 200, 150, 100);
+		btn4.setBounds(725, 200, 150, 100);
+		btn5.setBounds(125, 350, 150, 100);
+		btn6.setBounds(325, 350, 150, 100);
+		btn7.setBounds(525, 350, 150, 100);
+		btn8.setBounds(725, 350, 150, 100);
+		
+
+		add(title);
+		
+		add(btn1);
+		add(btn2);
+		add(btn3);
+		add(btn4);
+		add(btn5);
+		add(btn6);
+		add(btn7);
+		add(btn8);
+
+		btn1.addActionListener(new MyActionListener());
 		btn2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				System.out.println("Hello");
+				win.change("jpanelOfAddStudent");
+			}
+		});
+		btn3.addActionListener(new MyActionListener());
+		
+		JButton btn_logout = new JButton("Logout");
+		btn_logout.setSize(100, 40);
+		btn_logout.setLocation(10, 10);
+		add(btn_logout);
+		btn_logout.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				win.change("jpanel01");
+			}
+		});
+		
+		
+	}
+	
+
+	class MyActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			win.change("panel02");
+		}
+	}
+}
+
+
+
+class JPanelOfProfessorMain extends JPanel { // 1��° �г�
+
+	private JButton btn1, btn2, btn3, btn4;
+	private JPanelTest win;
+	private JLabel title;
+
+	public JPanelOfProfessorMain(JPanelTest win) {
+		this.win = win;
+		setLayout(null);
+
+		JLabel title = new JLabel("Professor Mode");
+		JButton btn1 = new JButton("My Lectures");
+		JButton btn2 = new JButton("My Students");
+		JButton btn3 = new JButton("My Department");		
+		JButton btn4 = new JButton("Time Table");
+		
+		title.setBounds(460, 5, 200, 50);
+		btn1.setBounds(125, 250, 150, 100);
+		btn2.setBounds(325, 250, 150, 100);
+		btn3.setBounds(525, 250, 150, 100);
+		btn4.setBounds(725, 250, 150, 100);
+
+		add(title);
+		add(btn1);
+		add(btn2);
+		add(btn3);
+		add(btn4);
+
+		
+		btn1.addActionListener(new MyActionListener());
+		btn2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				win.change("jpanelOfAddStudent");
 			}
 		});
-		JButton btn3 = new JButton("Lecture Management");
-		
-		btn1.setBounds(100, 250, 200, 100);
-		btn2.setBounds(400, 250, 200, 100);
-		btn3.setBounds(700, 250, 200, 100);
-
-		add(btn1);
-		add(btn2);
-		add(btn3);
-
-		btn1.addActionListener(new MyActionListener());
 		btn3.addActionListener(new MyActionListener());
 		
 		JButton btn_home = new JButton("Logout");
@@ -230,10 +321,78 @@ class JPanelOfAdminMain extends JPanel { // 1��° �г�
 	class MyActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			win.change("jpanel02");
+		}
+	}
+}
+
+
+class JPanelOfStudentMain extends JPanel { // 1��° �г�
+
+	private JButton btn1, btn2, btn3, btn4;
+	private JPanelTest win;
+	private JLabel title;
+
+	public JPanelOfStudentMain(JPanelTest win) {
+		this.win = win;
+		setLayout(null);
+
+		JLabel title = new JLabel("Student Mode");
+		JButton btn1 = new JButton("My Lectures");
+		JButton btn2 = new JButton("My Clubs");
+		JButton btn3 = new JButton("Report Card");		
+		JButton btn4 = new JButton("Time Table");
+		
+		title.setBounds(460, 5, 200, 50);
+		btn1.setBounds(125, 250, 150, 100);
+		btn2.setBounds(325, 250, 150, 100);
+		btn3.setBounds(525, 250, 150, 100);
+		btn4.setBounds(725, 250, 150, 100);
+
+		add(title);
+		add(btn1);
+		add(btn2);
+		add(btn3);
+		add(btn4);
+
+		
+		btn1.addActionListener(new MyActionListener());
+		btn2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				win.change("jpanelOfAddStudent");
+			}
+		});
+		btn3.addActionListener(new MyActionListener());
+		btn4.addActionListener(new MyActionListener());
+		
+		JButton btn_logout = new JButton("Logout");
+		btn_logout.setSize(100, 40);
+		btn_logout.setLocation(10, 10);
+		add(btn_logout);
+		btn_logout.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				win.change("jpanel01");
+			}
+		});
+		
+		
+	}
+	
+
+	class MyActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
 			win.change("panel02");
 		}
 	}
 }
+
+
 //
 //@SuppressWarnings("serial")
 //class JPanelOfProfessorMain extends JPanel {
@@ -300,12 +459,33 @@ class JPanel01 extends JPanel {
 	private JScrollPane jScrollPane1;
 	private JTextArea jTextArea1;
 	private JPanelTest win;
+	private JLabel title;
 
+// private JLabel title;
+// JLabel title = new JLabel("Home - Access Mode");
+// title.setBounds(450, 5, 200, 50);
+// add(title);
 	public JPanel01(JPanelTest win) {
 		this.win = win;
 		setLayout(null);
+		
+		JLabel title = new JLabel("Home - Access Mode");
 
 		JButton btn1 = new JButton("Admin");
+		JButton btn2 = new JButton("Professor");
+		JButton btn3 = new JButton("Student");
+
+		title.setBounds(430, 5, 200, 50);
+		
+		btn1.setBounds(100, 250, 200, 100);
+		btn2.setBounds(400, 250, 200, 100);
+		btn3.setBounds(700, 250, 200, 100);
+
+		add(title);
+	
+		add(btn1);
+		add(btn2);
+		add(btn3);
 		btn1.addActionListener(new ActionListener() {
 
 			@Override
@@ -313,20 +493,20 @@ class JPanel01 extends JPanel {
 				win.change("jpanelOfAdminMain");
 			}
 		});
-		JButton btn2 = new JButton("Professor");
-		JButton btn3 = new JButton("Student");
+		btn2.addActionListener(new ActionListener() {
 
-		btn1.setBounds(100, 250, 200, 100);
-		btn2.setBounds(400, 250, 200, 100);
-		btn3.setBounds(700, 250, 200, 100);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				win.change("jpanelOfProfessorMain");
+			}
+		});
+		btn3.addActionListener(new ActionListener() {
 
-		add(btn1);
-		add(btn2);
-		add(btn3);
-
-		btn2.addActionListener(new MyActionListener());
-		btn3.addActionListener(new MyActionListener());
-
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				win.change("jpanelOfStudentMain");
+			}
+		});
 	}
 
 	class MyActionListener implements ActionListener { 
@@ -415,8 +595,17 @@ class JPanelTest extends JFrame {
 	public JPanel01 jpanel01 = null;
 	public JPanel02 jpanel02 = null;
 	public JPanelOfAdminMain jpanelOfAdminMain = null;
-//	public JPanelOfProfessorMain jpanelOfProfessorMain = null;
+	public JPanelOfProfessorMain jpanelOfProfessorMain = null;
+	public JPanelOfStudentMain jpanelOfStudentMain = null;
+//	public AdminStudent adminStudent = null;
+//	public AdminProfessor adminProfessor = null;
+//	public AdminStudent adminStudent = null;
+//	public AdminStudent adminStudent = null;
+//	public AdminStudent adminStudent = null;
+//	public AdminStudent adminStudent = null;
+//	public AdminStudent adminStudent = null;
 	public JPanelOfAddStudent jpanelOfAddStudent = null;
+	
 
 
 	JPanelTest(){
@@ -428,7 +617,7 @@ class JPanelTest extends JFrame {
 		conDB();
 	}
 
-	public void change(String panelName) { // �г� 1���� 2�� ���� �� �缳��
+	public void change(String panelName) { 
 
 		if (panelName.equals("jpanel01")) {
 			getContentPane().removeAll();
@@ -441,8 +630,11 @@ class JPanelTest extends JFrame {
 			revalidate();
 			repaint();
 		} else if (panelName.equals("jpanelOfAddStudent")) {
+			System.out.println("start");
 			getContentPane().removeAll();
+			System.out.println("remove");
 			getContentPane().add(jpanelOfAddStudent);
+			System.out.println("add");
 			revalidate();
 			repaint();
 		} else if (panelName.equals("jpanel02")) {
@@ -450,16 +642,16 @@ class JPanelTest extends JFrame {
 			getContentPane().add(jpanel02);
 			revalidate();
 			repaint();
-//		} else if (panelName.equals("jpanelOfProfessorMain")) {
-//			getContentPane().removeAll();
-////			getContentPane().add(jpanelOfProfessorMain);
-//			revalidate();
-//			repaint();
-//		} else if (panelName.equals("jpanelOfProfessorMain")) {
-//			getContentPane().removeAll();
-////			getContentPane().add(jpanelOfProfessorMain);
-//			revalidate();
-//			repaint();
+		} else if (panelName.equals("jpanelOfProfessorMain")) {
+			getContentPane().removeAll();
+			getContentPane().add(jpanelOfProfessorMain);
+			revalidate();
+			repaint();
+		} else if (panelName.equals("jpanelOfStudentMain")) {
+			getContentPane().removeAll();
+			getContentPane().add(jpanelOfStudentMain);
+			revalidate();
+			repaint();
 //		} else if (panelName.equals("jpanelOfProfessorMain")) {
 //			getContentPane().removeAll();
 ////			getContentPane().add(jpanelOfProfessorMain);
