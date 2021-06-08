@@ -334,7 +334,7 @@
      
        
      
-   - 전체 테이블 보기 기능: 모든 테이블의 내용을 보여주는 기능
+   - 전체 테이블 보기 기능: 모든 테이블의 내용을 보여주는 기능. `view tables` 버튼 안에 8개 버튼.
 
      - `student`
      - `professor`
@@ -382,8 +382,8 @@
      ~~~mysql
      # 소속 학과 보기
      select * from department
-     where id = (select dept_id from student s
-     			where s.id = (학생 ID));
+     where id = (select dept_id from professor
+     			where id = (교수 ID));
      ~~~
 
      
@@ -397,8 +397,9 @@
    
 
 6. **Student**: 학생 사용자에 대해서 다음의 기능을 구현한다.
+   
    - `show lectures`: 입력된 연도/학기에 본인이 수강했던 과목에 대한 모든 정보를 보여주는 기능
-
+   
      ~~~mysql
      # 입력 연도/학기에 따른 수강 과목 보기
      select l.*, c.gpa from lecture l, course c
@@ -410,11 +411,11 @@
      # 복잡한데.. 더 줄일 수 있을 것인가?
      # 사실 이번 프로젝트에서는 크게 상관은 없다.
      ~~~
-
+   
      
-
+   
    - `time table`: 현재 학기에 본인이 수강하는 모든 과목을 시간표 형태로 표시하는 기능
-
+   
    - `club`: 본인이 소속된 동아리에 대한 정보를 보여주는 기능
      단, 동아리 회장의 경우에는 동아리에 “속한” 모든 학생들에 대한 정보를 보여주는 기능이 구현되어야 함
      

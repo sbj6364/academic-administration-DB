@@ -115,8 +115,8 @@ class JPanelOfAddStudent extends JPanel {
 			
 		});
 		
-		JButton btn_home = new JButton("Home");
-		btn_home.setSize(100, 50);
+		JButton btn_home = new JButton("Admin Home");
+		btn_home.setSize(120, 40);
 		btn_home.setLocation(10, 10);
 		add(btn_home);
 		btn_home.addActionListener(new ActionListener() {
@@ -169,10 +169,10 @@ class JPanelOfAddStudent extends JPanel {
 		}
 	}
 
-	class MyActionListener implements ActionListener { // ��ư Ű ������ �г� 1�� ȣ��
+	class MyActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			win.change("panel01");
+			win.change("jpanel01");
 		}
 	}
 
@@ -198,10 +198,10 @@ class JPanelOfAdminMain extends JPanel { // 1��° �г�
 			}
 		});
 		JButton btn3 = new JButton("Lecture Management");
-		// �� ��ư ��ġ�� ũ�� ����
-		btn1.setBounds(30, 170, 190, 50);
-		btn2.setBounds(250, 170, 190, 50);
-		btn3.setBounds(470, 170, 190, 50);
+		
+		btn1.setBounds(100, 250, 200, 100);
+		btn2.setBounds(400, 250, 200, 100);
+		btn3.setBounds(700, 250, 200, 100);
 
 		add(btn1);
 		add(btn2);
@@ -209,9 +209,25 @@ class JPanelOfAdminMain extends JPanel { // 1��° �г�
 
 		btn1.addActionListener(new MyActionListener());
 		btn3.addActionListener(new MyActionListener());
-	}
+		
+		JButton btn_home = new JButton("Logout");
+		btn_home.setSize(100, 40);
+		btn_home.setLocation(10, 10);
+		add(btn_home);
+		btn_home.addActionListener(new ActionListener() {
 
-	class MyActionListener implements ActionListener { // ��ư Ű ������ �г� 2�� ȣ��
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				win.change("jpanel01");
+			}
+		});
+		
+		
+	}
+	
+
+	class MyActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			win.change("panel02");
@@ -274,6 +290,8 @@ class JPanelOfAdminMain extends JPanel { // 1��° �г�
 //	}
 //}
 
+
+// Log in
 @SuppressWarnings("serial")
 class JPanel01 extends JPanel { 
 
@@ -292,7 +310,7 @@ class JPanel01 extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				win.change("JPanelOfAdminMain");
+				win.change("jpanelOfAdminMain");
 			}
 		});
 		JButton btn2 = new JButton("Professor");
@@ -311,16 +329,16 @@ class JPanel01 extends JPanel {
 
 	}
 
-	class MyActionListener implements ActionListener { // ��ư Ű ������ �г� 2�� ȣ��
+	class MyActionListener implements ActionListener { 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			win.change("panel02");
+			win.change("jpanel02");
 		}
 	}
 }
 
 @SuppressWarnings("serial")
-class JPanel02 extends JPanel { // 2��° �г�
+class JPanel02 extends JPanel { 
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JPanelTest win;
@@ -328,7 +346,7 @@ class JPanel02 extends JPanel { // 2��° �г�
 	public JPanel02(JPanelTest win) {
 		setLayout(null);
 		this.win = win;
-		JLabel lblLbl = new JLabel("���̵�:");
+		JLabel lblLbl = new JLabel("panel2:");
 		lblLbl.setBounds(31, 40, 67, 15);
 		add(lblLbl);
 
@@ -337,7 +355,7 @@ class JPanel02 extends JPanel { // 2��° �г�
 		add(textField);
 		textField.setColumns(10);
 
-		JLabel lblLbl_1 = new JLabel("��ȣ:");
+		JLabel lblLbl_1 = new JLabel("OOO");
 		lblLbl_1.setBounds(31, 84, 67, 15);
 		add(lblLbl_1);
 
@@ -345,17 +363,17 @@ class JPanel02 extends JPanel { // 2��° �г�
 		passwordField.setBounds(123, 84, 116, 21);
 		add(passwordField);
 
-		JButton btn = new JButton("��ư");
+		JButton btn = new JButton("OOO");
 		btn.setSize(70, 20);
 		btn.setLocation(10, 10);
 		add(btn);
 		btn.addActionListener(new MyActionListener());
 	}
 
-	class MyActionListener implements ActionListener { // ��ư Ű ������ �г� 1�� ȣ��
+	class MyActionListener implements ActionListener { 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			win.change("panel01");
+			win.change("jpanel01");
 		}
 	}
 }
@@ -412,12 +430,12 @@ class JPanelTest extends JFrame {
 
 	public void change(String panelName) { // �г� 1���� 2�� ���� �� �缳��
 
-		if (panelName.equals("panel01")) {
+		if (panelName.equals("jpanel01")) {
 			getContentPane().removeAll();
 			getContentPane().add(jpanel01);
 			revalidate();
 			repaint();
-		} else if (panelName.equals("JPanelOfAdminMain")) {
+		} else if (panelName.equals("jpanelOfAdminMain")) {
 			getContentPane().removeAll();
 			getContentPane().add(jpanelOfAdminMain);
 			revalidate();
@@ -427,14 +445,29 @@ class JPanelTest extends JFrame {
 			getContentPane().add(jpanelOfAddStudent);
 			revalidate();
 			repaint();
-		} else if (panelName.equals("jpanelOfProfessorMain")) {
-			getContentPane().removeAll();
-//			getContentPane().add(jpanelOfProfessorMain);
-			revalidate();
-			repaint();
-		} else {
+		} else if (panelName.equals("jpanel02")) {
 			getContentPane().removeAll();
 			getContentPane().add(jpanel02);
+			revalidate();
+			repaint();
+//		} else if (panelName.equals("jpanelOfProfessorMain")) {
+//			getContentPane().removeAll();
+////			getContentPane().add(jpanelOfProfessorMain);
+//			revalidate();
+//			repaint();
+//		} else if (panelName.equals("jpanelOfProfessorMain")) {
+//			getContentPane().removeAll();
+////			getContentPane().add(jpanelOfProfessorMain);
+//			revalidate();
+//			repaint();
+//		} else if (panelName.equals("jpanelOfProfessorMain")) {
+//			getContentPane().removeAll();
+////			getContentPane().add(jpanelOfProfessorMain);
+//			revalidate();
+//			repaint();
+		} else {
+			getContentPane().removeAll();
+			getContentPane().add(jpanel01);
 			revalidate();
 			repaint();
 		}
