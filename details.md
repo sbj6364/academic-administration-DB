@@ -456,4 +456,4 @@
 
 ### Scoring | 채점 기준
 
-![scoring](./img/scoring.png)
+<img src="./img/scoring.png" alt="scoring" style="zoom:50%;" />
