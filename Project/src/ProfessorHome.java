@@ -50,10 +50,21 @@ class ProfessorHome extends JPanel {
 		btn2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				win.change("jpanelOfAddStudent");
+				win.change("pStudentView");
 			}
 		});
-		btn3.addActionListener(new MyActionListener());
+		btn3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				win.change("pDeptView");
+			}
+		});
+		btn4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				win.change("pDeptView");
+			}
+		});
 		
 		JButton btn_home = new JButton("Logout");
 		btn_home.setSize(100, 40);
@@ -88,7 +99,7 @@ class PLectureView extends JPanel {
 	JLabel l1, l2, l3, title;
 	JTextField f1, f2, f3;
 	ResultSet rs;
-	JButton btn;
+	JButton btn, btnClear;
 	
 	
 	public PLectureView(JPanelTest win) {
@@ -103,8 +114,27 @@ class PLectureView extends JPanel {
 		title.setBounds(450, 5, 200, 50);
 		btn = new JButton("Search");
 		btn.setBounds(750, 50, 80, 30);
+		btnClear = new JButton("Clear");
+		btnClear.setBounds(850, 50, 80, 30);
 		add(title);
 		add(btn);
+		add(btnClear);
+		
+		
+//		btnClear = new JButton("Clear");
+//		btnClear.setBounds(850, 50, 80, 30);
+//		add(btnClear);
+//		btnClear.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				table.setText("");
+//	           f1.setText("");
+//	           f2.setText("");
+//	           f3.setText("");
+//		   }
+//			
+//		});
 		
 		btn.addActionListener(new ActionListener() {
 
@@ -159,8 +189,18 @@ class PLectureView extends JPanel {
 			}
 		});
 		
-		
-		
+		btnClear.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				table.setText("");
+	           f1.setText("");
+	           f2.setText("");
+	           f3.setText("");
+		   }
+			
+		});
+
 		f = new Font("Dialog", Font.PLAIN,10);
 		
 //		JScrollPane scrollPane = new JScrollPane(table);
@@ -204,7 +244,279 @@ class PLectureView extends JPanel {
 		btn_home.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				win.change("adminHome");
+				win.change("professorHome");
+			}
+		});
+	}
+
+	class MyActionListener implements ActionListener { 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			win.change("jpanel01");
+		}
+	}
+}
+
+
+
+
+class PStudentView extends JPanel { 
+	private JTextArea table;
+	private JPanelTest win;
+	private Font f;
+	JLabel l1, title;
+	JTextField f1;
+	ResultSet rs;
+	JButton btn, btnClear;
+	
+	
+	public PStudentView(JPanelTest win) {
+		setLayout(null);
+		this.win = win;
+
+		table = new JTextArea();
+		table.setBounds(50, 100, 900, 500);
+		table.setEditable(false);
+		
+		title = new JLabel("My Students");
+		title.setBounds(450, 5, 200, 50);
+		btn = new JButton("Search");
+		btnClear = new JButton("Clear");
+		btn.setBounds(600, 50, 80, 30);
+		btnClear.setBounds(800, 50, 80, 30);
+		add(title);
+		add(btn);
+		add(btnClear);
+		
+		btn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				int profid = 130000;
+				
+				String s1 = String.valueOf(f1.getText());
+				
+				profid = Integer.parseInt(s1);
+				
+				String query = "SELECT * FROM STUDENT WHERE `prof_id` = " + profid;
+				
+				
+				try {
+					Statement stmt;
+					stmt = JPanelTest.con.createStatement();
+				    table.setText("");
+				    table.setText("\n\n   ID\tNAME    ADDRESS \t PHONE \t\t EMAIL \t\t DEPT_ID \t SUBDEPT_ID \t PROF_ID \t ACCOUNT\n");
+				    rs = stmt.executeQuery(query);
+				    while (rs.next()) {
+				    	String str = rs.getInt(1) + "\t"
+				    			  + rs.getString(2) + " "
+				    			  + rs.getString(3) + "\t"
+				    			  + rs.getString(4) + "\t"
+				    			  + rs.getString(5) + "\t"
+				    			  + rs.getInt(6) + "\t"
+				    			  + rs.getInt(7) + "\t"
+				    			  + rs.getInt(8) + "\t"
+				    			  + rs.getString(9) + "\n";
+				    	table.append(str);
+				      }
+				  }
+				  catch (Exception e2) {
+					  System.out.println("쿼리 읽기 실패 :" + e2);
+		/* 			  } finally {
+						try {
+				            if (rs != null)
+				               rs.close();
+				            if (stmt != null)
+				               stmt.close();
+				            if (con != null)
+				               con.close();
+				        } catch (Exception e3) {
+				            // TODO: handle exception
+				        }
+		*/
+				  }
+			}
+		});
+		
+		btnClear.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				table.setText("");
+				f1.setText("");
+
+		   }
+			
+		});
+		
+
+		f = new Font("Dialog", Font.PLAIN,10);
+		
+//		JScrollPane scrollPane = new JScrollPane(table);
+		table.setFont(f);
+		add(table);
+		
+		l1 = new JLabel("prof_id");
+		
+		f1 = new JTextField(5);
+		
+		f1.setText("130001");
+		
+		add(l1);
+		
+		add(f1);
+		
+		l1.setBounds(400, 50, 100, 30);
+		
+		f1.setBounds(500, 50, 100, 30);
+
+//		add("North", scrollPane);
+		
+	   
+		JButton btn_home = new JButton("Back");
+		btn_home.setSize(120, 40);
+		btn_home.setLocation(10, 10);
+		add(btn_home);
+		btn_home.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				win.change("professorHome");
+			}
+		});
+	}
+
+	class MyActionListener implements ActionListener { 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			win.change("jpanel01");
+		}
+	}
+}
+
+
+
+class PDeptView extends JPanel { 
+	private JTextArea table;
+	private JPanelTest win;
+	private Font f;
+	JLabel l1, title;
+	JTextField f1;
+	ResultSet rs;
+	JButton btn, btnClear;
+	
+	
+	public PDeptView(JPanelTest win) {
+		setLayout(null);
+		this.win = win;
+
+		table = new JTextArea();
+		table.setBounds(50, 100, 900, 500);
+		table.setEditable(false);
+		
+		title = new JLabel("My Department");
+		title.setBounds(450, 5, 200, 50);
+		btn = new JButton("Search");
+		btnClear = new JButton("Clear");
+		btn.setBounds(600, 50, 80, 30);
+		btnClear.setBounds(800, 50, 80, 30);
+		add(title);
+		add(btn);
+		add(btnClear);
+		
+		btn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				int profid = 130000;
+				
+				String s1 = String.valueOf(f1.getText());
+				
+				profid = Integer.parseInt(s1);
+				
+				String query = "select * from department\n"
+						+ "where id = (select dept_id from professor p\n"
+						+ "where p.id = " + profid + ")";
+				
+				
+				try {
+					Statement stmt;
+					stmt = JPanelTest.con.createStatement();
+				    table.setText("");
+				    table.setText("\n\n   ID\tNAME \t OFFICE \t HEAD_PROFESSOR_ID \n");
+				    rs = stmt.executeQuery(query);
+				    while (rs.next()) {
+				    	String str = rs.getInt(1) + "\t"
+				    			  + rs.getString(2) + "\t"
+				    			  + rs.getString(3) + "\t"
+				    			  + rs.getInt(4) + "\n";
+				    	table.append(str);
+				      }
+				  }
+				  catch (Exception e2) {
+					  System.out.println("쿼리 읽기 실패 :" + e2);
+		/* 			  } finally {
+						try {
+				            if (rs != null)
+				               rs.close();
+				            if (stmt != null)
+				               stmt.close();
+				            if (con != null)
+				               con.close();
+				        } catch (Exception e3) {
+				            // TODO: handle exception
+				        }
+		*/
+				  }
+			}
+		});
+		
+		btnClear.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				table.setText("");
+				f1.setText("");
+
+		   }
+			
+		});
+		
+
+		f = new Font("Dialog", Font.PLAIN,10);
+		
+//		JScrollPane scrollPane = new JScrollPane(table);
+		table.setFont(f);
+		add(table);
+		
+		l1 = new JLabel("prof_id");
+		
+		f1 = new JTextField(5);
+		
+		f1.setText("130001");
+		
+		add(l1);
+		
+		add(f1);
+		
+		l1.setBounds(400, 50, 100, 30);
+		
+		f1.setBounds(500, 50, 100, 30);
+
+//		add("North", scrollPane);
+		
+	   
+		JButton btn_home = new JButton("Back");
+		btn_home.setSize(120, 40);
+		btn_home.setLocation(10, 10);
+		add(btn_home);
+		btn_home.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				win.change("professorHome");
 			}
 		});
 	}

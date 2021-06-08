@@ -15,6 +15,10 @@ public class App {
 		win.jpanelOfAddStudent = new JPanelOfAddStudent(win);
 		win.tableView = new TableView(win);
 		win.pLectureView = new PLectureView(win);
+		win.pStudentView = new PStudentView(win);
+		win.pDeptView = new PDeptView(win);
+		win.sLectureView = new SLectureView(win);
+		win.sClubView = new SClubView(win);
 
 		win.add(win.jpanel01);
 		win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -23,7 +23,7 @@ class JPanelOfAddStudent extends JPanel {
 	private HashMap<String, JTextField> textFieldMap;
 	private JPasswordField passwordField;
 	private JPanelTest win;
-	private JLabel title;
+	private JLabel title, err;
 
 	public JPanelOfAddStudent(JPanelTest win) {
 		setLayout(null);
@@ -40,6 +40,9 @@ class JPanelOfAddStudent extends JPanel {
 		btn.setLocation(230, 470);
 		add(title);
 		add(btn);
+		JLabel err = new JLabel("");
+		err.setBounds(400, 470, 200, 50);
+		add(err);
 		btn.addActionListener(new ActionListener() {
 
 			@Override
@@ -110,6 +113,9 @@ class JPanelOfAddStudent extends JPanel {
 					System.out.println("Insert Completed!");
 				}
 				catch (Exception e2) {
+					err.setText("Invalid!");
+					err.setBounds(380, 450, 200, 50);
+					add(err);
 //					txtResult.append("Inserting Failed!\n"
 //					  				+ "Please try again with proper values.");
 					System.out.println("쿼리 읽기 실패 :" + e2);
@@ -128,9 +134,31 @@ class JPanelOfAddStudent extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				win.change("JPanelOfAdminMain");
+				win.change("adminHome");
 			}
 		});
+		
+		JButton btnClear = new JButton("Clear");
+		btnClear.setBounds(850, 50, 80, 30);
+		add(btnClear);
+		btnClear.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				textFieldMap.get("id").setText("");
+				textFieldMap.get("name").setText("");
+				textFieldMap.get("address").setText("");
+				textFieldMap.get("phone").setText("");
+				textFieldMap.get("email").setText("");
+				textFieldMap.get("dept_id").setText("");
+				textFieldMap.get("subdept_id").setText("");
+				textFieldMap.get("prof_id").setText("");
+				textFieldMap.get("account").setText("");
+				err.setText("");
+		   }
+			
+		});
+		
 
 	}
 
@@ -329,16 +357,17 @@ class JPanelTest extends JFrame {
 	public AdminHome adminHome = null;
 	public ProfessorHome professorHome = null;
 	public StudentHome studentHome = null;
-//	public AdminStudent adminStudent = null;
-//	public AdminProfessor adminProfessor = null;
-//	public AdminStudent adminStudent = null;
-//	public AdminStudent adminStudent = null;
-//	public AdminStudent adminStudent = null;
-//	public AdminStudent adminStudent = null;
-//	public AdminStudent adminStudent = null;
 	public JPanelOfAddStudent jpanelOfAddStudent = null;
 	public TableView tableView = null;
 	public PLectureView pLectureView = null;
+	public PStudentView pStudentView = null;
+	public PDeptView pDeptView = null;
+	public SLectureView sLectureView = null;
+	public SClubView sClubView = null;
+//	public AdminStudent adminStudent = null;
+//	public AdminStudent adminStudent = null;
+//	public AdminStudent adminStudent = null;
+//	public AdminStudent adminStudent = null;
 	
 
 
@@ -396,19 +425,34 @@ class JPanelTest extends JFrame {
 			getContentPane().add(pLectureView);
 			revalidate();
 			repaint();
-		} else if (panelName.equals("tableView")) {
+		} else if (panelName.equals("pStudentView")) {
 			getContentPane().removeAll();
-			getContentPane().add(tableView);
+			getContentPane().add(pStudentView);
 			revalidate();
 			repaint();
-		} else if (panelName.equals("tableView")) {
+		} else if (panelName.equals("pDeptView")) {
 			getContentPane().removeAll();
-			getContentPane().add(tableView);
+			getContentPane().add(pDeptView);
 			revalidate();
 			repaint();
-		} else if (panelName.equals("tableView")) {
+		} else if (panelName.equals("sClubView")) {
 			getContentPane().removeAll();
-			getContentPane().add(tableView);
+			getContentPane().add(sClubView);
+			revalidate();
+			repaint();
+		} else if (panelName.equals("sLectureView")) {
+			getContentPane().removeAll();
+			getContentPane().add(sLectureView);
+			revalidate();
+			repaint();
+		} else if (panelName.equals("sLectureView")) {
+			getContentPane().removeAll();
+			getContentPane().add(sLectureView);
+			revalidate();
+			repaint();
+		} else if (panelName.equals("sLectureView")) {
+			getContentPane().removeAll();
+			getContentPane().add(sLectureView);
 			revalidate();
 			repaint();
 		} else {
