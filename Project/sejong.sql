@@ -219,7 +219,7 @@ INSERT INTO `student` VALUES(17011816, '권도윤', '서울특별시 노원구',
 INSERT INTO `student` VALUES(17011817, '김민석', '경상남도 통영시', '010-4532-8364', 'kms@madang.ac.kr', 3232, NULL, 130010, '경남은행 646-267573-43523');
 INSERT INTO `student` VALUES(17011818, '김지오', '경기도 분당시', '010-7234-6472', 'kjo@madang.ac.kr', 3225, NULL, 130008, '농협 123-42352-53452');
 INSERT INTO `student` VALUES(17011819, '김연우', '경기도 분당시', '010-3426-2351', 'kyw@madang.ac.kr', 3232, NULL, 130010, '우리은행 34253-545656-745');
-INSERT INTO `student` VALUES(17011820, '문승재', '제주도 서귀포시', '010-3472-4367', 'msj@madang.ac.kr', 3225, NULL, 130008, '기업은행 453-534657-54534');
+INSERT INTO `student` VALUES(17011820, '문승재', '제주특별자치도 서귀포시', '010-3472-4367', 'msj@madang.ac.kr', 3225, NULL, 130008, '기업은행 453-534657-54534');
 # 20
 INSERT INTO `student` VALUES(17011821, '박준희', '경기도 분당시', '010-8765-2371', 'pjh@madang.ac.kr', 3232, NULL, 130010, '국민은행 536-564574-12413');
 INSERT INTO `student` VALUES(17011822, '안정연', '서울특별시 광진구', '010-5423-5673', 'ajy@madang.ac.kr', 3210, NULL, 130001, '국민은행 786-234252-652788');
@@ -227,7 +227,7 @@ INSERT INTO `student` VALUES(17011823, '원종서', '서울특별시 광진구',
 INSERT INTO `student` VALUES(17011824, '윤상혁', '서울특별시 광진구', '010-3646-1634', 'ysh@madang.ac.kr', 3210, NULL, 130001, '신한은행 245-657489-45347');
 INSERT INTO `student` VALUES(17011825, '이다은', '경기도 포천시', '010-4674-6453', 'lde@madang.ac.kr', 3232, NULL, 130010, '국민은행 236-564322-76483');
 
--- INSERT INTO `student` VALUES(17011826, '홍길동', '서울특별시 광진구', '010-1234-2323', 'hgd@madang.ac.kr', 3232, NULL, 130001, '국민은행 236-342243-76483');  
+INSERT INTO `student` VALUES(17011826, '홍길동', '서울특별시 광진구', '010-1234-2323', 'hgd@madang.ac.kr', 3232, NULL, 130001, '국민은행 236-342243-76483');
 
 
 -- ------------------------------

@@ -13,6 +13,8 @@ public class App {
 		win.professorHome = new ProfessorHome(win);
 		win.studentHome = new StudentHome(win);
 		win.jpanelOfAddStudent = new JPanelOfAddStudent(win);
+		win.tableView = new TableView(win);
+		win.pLectureView = new PLectureView(win);
 
 		win.add(win.jpanel01);
 		win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

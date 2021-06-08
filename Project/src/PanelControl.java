@@ -337,6 +337,8 @@ class JPanelTest extends JFrame {
 //	public AdminStudent adminStudent = null;
 //	public AdminStudent adminStudent = null;
 	public JPanelOfAddStudent jpanelOfAddStudent = null;
+	public TableView tableView = null;
+	public PLectureView pLectureView = null;
 	
 
 
@@ -384,11 +386,31 @@ class JPanelTest extends JFrame {
 			System.out.println("add");
 			revalidate();
 			repaint();
-//		} else if (panelName.equals("jpanelOfProfessorMain")) {
-//			getContentPane().removeAll();
-////			getContentPane().add(jpanelOfProfessorMain);
-//			revalidate();
-//			repaint();
+		} else if (panelName.equals("tableView")) {
+			getContentPane().removeAll();
+			getContentPane().add(tableView);
+			revalidate();
+			repaint();
+		} else if (panelName.equals("pLectureView")) {
+			getContentPane().removeAll();
+			getContentPane().add(pLectureView);
+			revalidate();
+			repaint();
+		} else if (panelName.equals("tableView")) {
+			getContentPane().removeAll();
+			getContentPane().add(tableView);
+			revalidate();
+			repaint();
+		} else if (panelName.equals("tableView")) {
+			getContentPane().removeAll();
+			getContentPane().add(tableView);
+			revalidate();
+			repaint();
+		} else if (panelName.equals("tableView")) {
+			getContentPane().removeAll();
+			getContentPane().add(tableView);
+			revalidate();
+			repaint();
 		} else {
 			getContentPane().removeAll();
 			getContentPane().add(jpanel01);

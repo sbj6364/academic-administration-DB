@@ -7,5 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/Users/seobj/Downloads/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar"/>
+	<classpathentry kind="lib" path="/Users/seobj/Downloads/ibatis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

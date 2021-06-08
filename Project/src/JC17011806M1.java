@@ -509,7 +509,7 @@ public class JC17011806M1 extends JFrame implements ActionListener {
     		System.out.println("프로그램 완전 종료 !");
     		System.exit(0);
     	  }
-    	});
+      });
    }
 	
 }

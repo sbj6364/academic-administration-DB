@@ -37,7 +37,7 @@ select * from tuition;
 
 # 교수) 입력 연도/학기에 따른 강의 과목 보기
 select * from lecture
-where prof_id = 130001 and year=2021 and semester=1;
+where prof_id = 130003 and year=2021 and semester=1;
 
 # 교수) 지도 학생 보기
 select * from student
@@ -50,8 +50,11 @@ where c.student_id = 17011806 and c.lecture_id = l.id and c.class_id = l.class_i
 
 # 교수) 소속 학과 보기
 select * from department
-where id = (select dept_id from student s
-			where s.id = 17011806);
+where id = (select dept_id from professor
+			where id = 130004);
+
+
+
             
 ########### Student
 
@@ -69,3 +72,5 @@ delete from student
 where id = 17011826;
 
 show databases;
+
+select
