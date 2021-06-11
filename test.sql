@@ -50,8 +50,8 @@ where c.student_id = 17011806 and c.lecture_id = l.id and c.class_id = l.class_i
 
 # 교수) 소속 학과 보기
 select * from department
-where id = (select dept_id from professor
-			where id = 130004);
+where id = (select dept_id from professor p
+			where p.id = 130001);
 
 
 
@@ -61,7 +61,16 @@ where id = (select dept_id from professor
 # 입력 연도/학기에 따른 수강 과목 보기 
 select l.*, c.gpa from lecture l, course c
 where l.year=2021 and l.semester=1
-	and c.student_id = 17011806 and l.id=c.lecture_id and l.class_id = c.class_id;
+	and c.student_id = 17011803 and l.id=c.lecture_id and l.class_id = c.class_id;
+
+
+
+# 동아리 정보 보기
+select * from club c
+where id in (select club_id from club_member m
+			where student_id = 17011806);
+            
+
 
 #     
 select lecture_id from course c
