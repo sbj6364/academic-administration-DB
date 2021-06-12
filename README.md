@@ -140,9 +140,23 @@
 
  
 
-*** 주의 : **프로그램을 복사하여 제출하는 경우에는 원본과 복사본을 불문하고 모두 **FA**학점 처리됨!
+### To Do
 
-
+1. Manager(Admin) 창 기능 완성 (insert, delete, update)
+   - Professor
+   - ~~Student~~ (delete, update 추가해야 함)
+   - Department
+   - Lecture
+   - Course
+   - Club
+   - Club Member
+   - Tuition
+2. 모든 창에 Status Text Area 추가
+3. Professor mode
+   - `My Department` query 수정 필요 (학과장 정보 따로 출력할 수 있도록)
+4. Student mode
+   - `Report Card` 기능 추가
+5. Time Table feature 추가
 
 
 
