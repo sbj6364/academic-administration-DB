@@ -1,5 +1,5 @@
 # Academic Administration DB
-> Database for academic administration of Sejong Univ.
+> Database GUI for academic administration of Sejong Univ.
 
 
 
