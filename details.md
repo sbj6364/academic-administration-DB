@@ -1,3 +1,4 @@
+> Last Update 2021.06.29.
 # Requirements Statement / Schema
 > **요구사항 명세서 및 스키마 정의** 데이터베이스 설계에 필요한 사용자 요구사항을 항목별로 정리한 내용.  
 >
