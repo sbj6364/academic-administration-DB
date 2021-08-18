@@ -2,6 +2,8 @@
 > Database GUI for academic administration of Sejong Univ.
 
 
+### Last Update
+2021.06.29.
 
 ### Outline | 개요
 
