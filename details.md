@@ -1,9 +1,6 @@
 > Last Update 2021.06.29.
 # Requirements Statement / Schema
 > **요구사항 명세서 및 스키마 정의** 데이터베이스 설계에 필요한 사용자 요구사항을 항목별로 정리한 내용.  
->
-> 본래 2인 1조 과제이기에, 열심히 연락을 돌려보았지만 타 과 수업이라.. 팀원을 구할 수 없어 혼자 진행하게 되었다.
-
 
 
 ### EER Diagram | EER 다이어그램
@@ -272,33 +269,7 @@
 
 > 모든 내용은 하나의 창 안에서 작동해야 한다.
 
-
-
-1. 사용자 계정은 madang/madang 으로 코드에 포함시킨다. 즉, 프로그램을 구동하면 바로 MySQL로 접속되어 사용 가능해야 함.
-   - Eclipse의 JAVA Project 이름은 반드시 제출자의 “학번”으로 정한다.
-     *예) 학번이 18013001 인 경우 제출하는 압축파일 안의 프로젝트 디렉토리 명이 반드시 18013001 이어야 함.*
-
-2. MySQL 접속 코드는 중간고사 시에 제공된 샘플코드와 “동일”한 코드를 사용한다. (이외의 접속 코드 사용시에는 0점 처리됨)
-   
-   ~~~java
-   static Connection con;
-   Statement stmt;
-   ResultSet rs;
-   String Driver = "";
-   String url = "jdbc:mysql://localhost:3306/madang?&serverTimezone=Asia/Seoul&useSSL=false";
-   String userid = "madang";
-   String pwd = "madang";
-   ~~~
-   
-   
-   
-3. 접속 후에는 관리자/교수/학생에 대한 기능을 구현한다. 단, 채점의 용이성을 위해서 관리자/일반사용자 모두 madang 계정을 이용한다. 즉, madang 계정으로 자동 로그인 한후, GUI 화면에서 관리자/교수/학생을 택하여 다음 화면으로 넘어가는 형태로 구현한다.
-
-   ![Login](./img/1.png)
-
-   
-
-4. **Manager**: 관리자에 대해서 다음의 기능을 구현한다.
+1. **Manager**: 관리자에 대해서 다음의 기능을 구현한다.
 
    - 데이터베이스 초기화 기능
 
@@ -355,7 +326,7 @@
 
    
 
-5. **Professor**: 교수 사용자에 대해서 다음의 기능을 구현한다.
+2. **Professor**: 교수 사용자에 대해서 다음의 기능을 구현한다.
    ![plectures](./img/5.png)
 
    - `show lectures`: 입력된 연도/학기에 본인이 강의했던 과목에 대한 모든 정보를 보여주는 기능
@@ -406,7 +377,7 @@
 
    
 
-6. **Student**: 학생 사용자에 대해서 다음의 기능을 구현한다.
+3. **Student**: 학생 사용자에 대해서 다음의 기능을 구현한다.
    ![plectures](./img/9.png)
 
    - `show lectures`: 입력된 연도/학기에 본인이 수강했던 과목에 대한 모든 정보를 보여주는 기능
@@ -462,10 +433,3 @@
 - club_member: 29명
 - tuition: 25개
 
-
-
-
-
-### Scoring | 채점 기준
-
-<img src="./img/scoring.png" alt="scoring" style="zoom:30%;" />
